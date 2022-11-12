@@ -3,28 +3,51 @@ const SubCategory = require("../../models/SubCategory");
 const createSubCategory = async (req, res) => {
     try {
         const { title, categoryID, description, subCategory, image } = req.body;
-        console.log("req.body sub==>",req.body);
-        
-        if (!title || !categoryID || !description ) {
-          throw new Error("Please enter all value");
+        console.log("req.body sub==>", req.body);
+
+        if (!title || !categoryID || !description) {
+            throw new Error("Please enter all value");
         }
-        
+
         const postSubCategory = new SubCategory(req.body);
         await postSubCategory.save();
-        
-        console.log("postSubCategory==>",postSubCategory);
-        
-        return res.status(200).send({ message: "SubCategory Created successfully!!", postSubCategory});
-      } catch (error) {
+
+        console.log("postSubCategory==>", postSubCategory);
+
+        return res.status(200).send({ message: "SubCategory Created successfully!!", postSubCategory });
+    } catch (error) {
         return res.status(400).send(error.toString());
-      }
+    }
 };
 
 const getAllSubCategory = async (req, res) => {
     try {
         const data = await SubCategory.find();
-        
+
         return res.status(200).send(data);
+    } catch (error) {
+        return res.status(400).send(error.toString());
+    }
+}
+
+const getSubCategoryByID = async (req, res) => {
+    try {
+        const сategory = await SubCategory.findById(req.params.id);
+        console.log("subcat===", сategory);
+
+        return res.status(200).send(data);
+    } catch (error) {
+        return res.status(400).send(error.toString());
+    }
+}
+
+const getSubCategoriesByCategoryID = async (req, res) => {
+    console.log(req.params.id, "req.params.id");
+    try {
+        const сategory = await SubCategory.find({ categoryID: req.params.id });
+        console.log("subcat===", сategory);
+
+        return res.status(200).send(сategory);
     } catch (error) {
         return res.status(400).send(error.toString());
     }
@@ -59,6 +82,8 @@ const deleteSubCategory = async (req, res) => {
 module.exports = {
     createSubCategory,
     getAllSubCategory,
+    getSubCategoryByID,
     updateSubCategory,
-    deleteSubCategory
+    deleteSubCategory,
+    getSubCategoriesByCategoryID,
 };

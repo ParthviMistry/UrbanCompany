@@ -27,6 +27,16 @@ const getAllCategory = async (req, res) => {
     }
 }
 
+const getCategoryByID = async (req, res) => {
+    try {
+        const сategory = await Category.findById(req.params.id);
+        console.log("cat===", сategory);
+        return res.status(200).send(сategory);
+    } catch (error) {
+        return res.status(400).send(error.toString());
+    }
+}
+
 const updatecategory = async (req, res) => {
     try {
         const updatedCategory = await Category.findByIdAndUpdate(
@@ -55,6 +65,7 @@ const deletecategory = async (req, res) => {
 
 module.exports = {
     getAllCategory,
+    getCategoryByID,
     createCategory,
     updatecategory,
     deletecategory
