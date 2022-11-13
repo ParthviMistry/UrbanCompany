@@ -9,7 +9,6 @@ export const loginAPI = createAsyncThunk(
         "http://localhost:5000/api/login",
         user
       );
-      console.log("response==>", response);
       return response.data;
     } catch (e) {
       return getState.rejectWithValue(e.response.data);
@@ -20,13 +19,11 @@ export const loginAPI = createAsyncThunk(
 export const signUpAPI = createAsyncThunk(
   "auth/signUpAPI",
   async (user, getState) => {
-    console.log("signuppppppppppppppppp",user);
     try {
       const response = await axios.post(
         "http://localhost:5000/api/signup",
         user
       );
-      console.log("response signup==>", response);
       return response.data;
     } catch (e) {
       return getState.rejectWithValue(e.response.data);

@@ -1,10 +1,15 @@
 import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
-import authSlice from "./authSlice";
 import { combineReducers } from "redux";
+
+import authSlice from "./authSlice";
+import categorySlice from "./categorySlice";
+import searchSlice from "./searchSlice";
 
 const store = configureStore({
   reducer: combineReducers({
     auth: authSlice,
+    category: categorySlice,
+    search: searchSlice,
   }),
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

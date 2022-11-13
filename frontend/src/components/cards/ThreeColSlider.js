@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import Slider from "react-slick";
 import tw from "twin.macro";
 import styled from "styled-components";
@@ -9,6 +9,13 @@ import { ReactComponent as LocationIcon } from "feather-icons/dist/icons/map-pin
 import { ReactComponent as StarIcon } from "feather-icons/dist/icons/star.svg";
 import { ReactComponent as ChevronLeftIcon } from "feather-icons/dist/icons/chevron-left.svg";
 import { ReactComponent as ChevronRightIcon } from "feather-icons/dist/icons/chevron-right.svg";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  getAllCategory,
+  getSubCategoriesByCategoryID,
+} from "store/categorySlice";
+
+import CategoryModal from "components/modal/categoryModal";
 
 const Container = tw.div`relative`;
 const Content = tw.div`max-w-screen-xl mx-auto py-16 lg:py-20`;
@@ -27,7 +34,7 @@ const NextButton = tw(ControlButton)``;
 
 const CardSlider = styled(Slider)`
   ${tw`mt-16`}
-  .slick-track { 
+  .slick-track {
     ${tw`flex`}
   }
   .slick-slide {
@@ -35,9 +42,9 @@ const CardSlider = styled(Slider)`
   }
 `;
 const Card = tw.div`h-full flex! flex-col sm:border max-w-sm sm:rounded-tl-4xl sm:rounded-br-5xl relative focus:outline-none`;
-const CardImage = styled.div(props => [
+const CardImage = styled.div((props) => [
   `background-image: url("${props.imageSrc}");`,
-  tw`w-full h-56 sm:h-64 bg-cover bg-center rounded sm:rounded-none sm:rounded-tl-4xl`
+  tw`w-full h-56 sm:h-64 bg-cover bg-center rounded sm:rounded-none sm:rounded-tl-4xl`,
 ]);
 
 const TextInfo = tw.div`py-6 sm:px-10 sm:py-6`;
@@ -64,9 +71,11 @@ const IconContainer = styled.div`
 `;
 const Text = tw.div`ml-2 text-sm font-semibold text-gray-800`;
 
-const PrimaryButton = tw(PrimaryButtonBase)`mt-auto sm:text-lg rounded-none w-full rounded sm:rounded-none sm:rounded-br-4xl py-3 sm:py-6`;
+const PrimaryButton = tw(
+  PrimaryButtonBase
+)`mt-auto sm:text-lg rounded-none w-full rounded sm:rounded-none sm:rounded-br-4xl py-3 sm:py-6`;
+
 export default () => {
-  // useState is used instead of useRef below because we want to re-render when sliderRef becomes available (not null)
   const [sliderRef, setSliderRef] = useState(null);
   const sliderSettings = {
     arrows: false,
@@ -76,95 +85,70 @@ export default () => {
         breakpoint: 1280,
         settings: {
           slidesToShow: 2,
-        }
+        },
       },
 
       {
         breakpoint: 900,
         settings: {
           slidesToShow: 1,
-        }
+        },
       },
-    ]
+    ],
   };
 
-  /* Change this according to your needs */
-  const cards = [
-    {
-      imageSrc: "https://images.unsplash.com/photo-1571896349842-33c89424de2d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&h=1024&w=768&q=80",
-      title: "Wyatt Residency",
-      description: "Lorem ipsum dolor sit amet, consectur dolori adipiscing elit, sed do eiusmod tempor nova incididunt ut labore et dolore magna aliqua.",
-      locationText: "Rome, Italy",
-      pricingText: "USD 39/Day",
-      rating: "4.8",
-    },
-    {
-      imageSrc: "https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&h=1024&w=768&q=80",
-      title: "Soho Paradise",
-      description: "Lorem ipsum dolor sit amet, consectur dolori adipiscing elit, sed do eiusmod tempor nova incididunt ut labore et dolore magna aliqua.",
-      locationText: "Ibiza, Spain",
-      pricingText: "USD 50/Day",
-      rating: 4.9,
-    },
-    {
-      imageSrc: "https://images.unsplash.com/photo-1549294413-26f195200c16?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&h=1024&w=768&q=80",
-      title: "Hotel Baja",
-      description: "Lorem ipsum dolor sit amet, consectur dolori adipiscing elit, sed do eiusmod tempor nova incididunt ut labore et dolore magna aliqua.",
-      locationText: "Palo Alto, CA",
-      pricingText: "USD 19/Day",
-      rating: "5.0",
-    },
-    {
-      imageSrc: "https://images.unsplash.com/photo-1571770095004-6b61b1cf308a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&h=1024&w=768&q=80",
-      title: "Hudak Homes",
-      description: "Lorem ipsum dolor sit amet, consectur dolori adipiscing elit, sed do eiusmod tempor nova incididunt ut labore et dolore magna aliqua.",
-      locationText: "Arizona, RAK",
-      pricingText: "USD 99/Day",
-      rating: 4.5,
-    },
-  ]
+  const dispatch = useDispatch();
 
+  const [drawer, setDrawer] = useState(false);
+  const data = useSelector((state) => state?.category?.getdata);
+
+  useEffect(() => {
+    dispatch(getAllCategory());
+  }, []);
+
+  const handleDrawer = (id) => {
+    setDrawer(!drawer);
+    dispatch(getSubCategoriesByCategoryID(id));
+  };
+  
   return (
     <Container>
       <Content>
+        {drawer && (
+          <CategoryModal
+            setDrawer={setDrawer}
+            drawer={drawer}
+          />
+        )}
         <HeadingWithControl>
-          <Heading>Popular Hotels</Heading>
+          <Heading>Popular Services</Heading>
           <Controls>
-            <PrevButton onClick={sliderRef?.slickPrev}><ChevronLeftIcon/></PrevButton>
-            <NextButton onClick={sliderRef?.slickNext}><ChevronRightIcon/></NextButton>
+            <PrevButton onClick={sliderRef?.slickPrev}>
+              <ChevronLeftIcon />
+            </PrevButton>
+            <NextButton onClick={sliderRef?.slickNext}>
+              <ChevronRightIcon />
+            </NextButton>
           </Controls>
         </HeadingWithControl>
         <CardSlider ref={setSliderRef} {...sliderSettings}>
-          {cards.map((card, index) => (
-            <Card key={index}>
-              <CardImage imageSrc={card.imageSrc} />
-              <TextInfo>
-                <TitleReviewContainer>
-                  <Title>{card.title}</Title>
-                  <RatingsInfo>
-                    <StarIcon />
-                    <Rating>{card.rating}</Rating>
-                  </RatingsInfo>
-                </TitleReviewContainer>
-                <SecondaryInfoContainer>
-                  <IconWithText>
-                    <IconContainer>
-                      <LocationIcon />
-                    </IconContainer>
-                    <Text>{card.locationText}</Text>
-                  </IconWithText>
-                  <IconWithText>
-                    <IconContainer>
-                      <PriceIcon />
-                    </IconContainer>
-                    <Text>{card.pricingText}</Text>
-                  </IconWithText>
-                </SecondaryInfoContainer>
-                <Description>{card.description}</Description>
-              </TextInfo>
-              <PrimaryButton>Book Now</PrimaryButton>
-            </Card>
-          ))}
+          {data?.length &&
+            data.map((card, index) => (
+              <Card key={index} onClick={() => handleDrawer(card?._id)}>
+                <CardImage imageSrc={card.imageSrc} />
+                <TextInfo>
+                  <TitleReviewContainer>
+                    <Title>{card.title}</Title>
+                    <RatingsInfo>
+                      <StarIcon />
+                      <Rating>{card.rating}</Rating>
+                    </RatingsInfo>
+                  </TitleReviewContainer>
+                  <Description>{card.description}</Description>
+                </TextInfo>
+                <PrimaryButton>View more</PrimaryButton>
+              </Card>
+            ))}
         </CardSlider>
       </Content>
     </Container>

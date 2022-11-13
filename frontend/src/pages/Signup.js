@@ -61,7 +61,7 @@ const IllustrationImage = styled.div`
 `;
 
 const SignUp = ({
-  logoLinkUrl = "#",
+  logoLinkUrl = "/",
   illustrationImageSrc = illustration,
   headingText = "Sign Up",
   submitButtonText = "Sign Up",
@@ -77,9 +77,12 @@ const SignUp = ({
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("click", data);
+
     if (data.email && data.password) {
-      if (data) { dispatch(signUpAPI(data)); navigate("/") }
+      if (data) {
+        dispatch(signUpAPI(data));
+        navigate("/");
+      }
     }
   };
 
@@ -88,7 +91,6 @@ const SignUp = ({
       ...data,
       [key]: value,
     });
-    console.log("data===========", data);
   };
 
   return (
@@ -145,7 +147,9 @@ const SignUp = ({
                     <a
                       href={signInUrl}
                       tw="border-b border-gray-500 border-dotted"
-                      onClick={() => { navigate("/") }}
+                      onClick={() => {
+                        navigate("/");
+                      }}
                     >
                       Sign In
                     </a>
