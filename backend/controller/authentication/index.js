@@ -14,7 +14,6 @@ const userLogin = async (req, res) => {
     if(!user) throw new Error("unauthorized user")
 
     const token = await User.genrateAuthToken(user);
-    console.log("user, token ==>",user, token)
 
     return res.status(200).send({ user, token });
   } catch (error) {

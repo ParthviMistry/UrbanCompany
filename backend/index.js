@@ -4,8 +4,7 @@ const cors = require("cors");
 
 const app = express();
 
-const authRoute = require("./routes/authentication");
-const categoryRoute = require("./routes/category");
+const mainRoute = require("./routes");
 
 require("dotenv").config();
 
@@ -13,8 +12,7 @@ app.use(express.json());
 app.use(express.urlencoded({ limit: "50mb", extended: true }));
 app.use(cors());
 
-app.use(authRoute);
-app.use(categoryRoute);
+app.use(mainRoute);
 
 const uri = process.env.DB_URI;
 const port = process.env.PORT || 5000;

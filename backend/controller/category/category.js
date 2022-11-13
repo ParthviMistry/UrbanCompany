@@ -2,10 +2,10 @@ const Category = require("../../models/Category");
 
 const createCategory = async (req, res) => {
     try {
-        const { title, category, description, image } = req.body;
+        const { title, description, mainTitleId } = req.body;
 
-        if (!title || !category || !description) {
-            throw new Error("Please enter all value");
+        if (!title || !description || !mainTitleId) {
+          throw new Error("Please enter all value");
         }
 
         const postCategory = new Category(req.body);
@@ -29,13 +29,24 @@ const getAllCategory = async (req, res) => {
 
 const getCategoryByID = async (req, res) => {
     try {
-        const сategory = await Category.findById(req.params.id);
-        console.log("cat===", сategory);
-        return res.status(200).send(сategory);
+        const category = await Category.findById(req.params.id);
+
+        return res.status(200).send(category);
     } catch (error) {
         return res.status(400).send(error.toString());
     }
 }
+
+
+const getCategoriesByMainTitleID = async (req, res) => {
+  try {
+    const category = await Category.find({ mainTitleId : req.params.id });
+
+    return res.status(200).send(category);
+  } catch (error) {
+    return res.status(400).send(error.toString());
+  }
+};
 
 const updatecategory = async (req, res) => {
     try {
@@ -66,6 +77,7 @@ const deletecategory = async (req, res) => {
 module.exports = {
     getAllCategory,
     getCategoryByID,
+    getCategoriesByMainTitleID,
     createCategory,
     updatecategory,
     deletecategory

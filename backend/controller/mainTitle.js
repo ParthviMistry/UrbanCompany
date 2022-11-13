@@ -25,9 +25,8 @@ const getAllMainTitle = async (req, res) => {
 
 const getMAinTitleByID = async (req, res) => {
   try {
-    const сategory = await Category.findById(req.params.id);
-    console.log("cat===", сategory);
-    return res.status(200).send(сategory);
+    const category = await Category.findById(req.params.id);
+    return res.status(200).send(category);
   } catch (error) {
     return res.status(400).send(error.toString());
   }

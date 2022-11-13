@@ -2,8 +2,7 @@ const SubCategory = require("../../models/SubCategory");
 
 const createSubCategory = async (req, res) => {
     try {
-        const { title, categoryID, description, subCategory, image } = req.body;
-        console.log("req.body sub==>", req.body);
+        const { title, categoryID, description, image } = req.body;
 
         if (!title || !categoryID || !description) {
             throw new Error("Please enter all value");
@@ -11,8 +10,6 @@ const createSubCategory = async (req, res) => {
 
         const postSubCategory = new SubCategory(req.body);
         await postSubCategory.save();
-
-        console.log("postSubCategory==>", postSubCategory);
 
         return res.status(200).send({ message: "SubCategory Created successfully!!", postSubCategory });
     } catch (error) {
@@ -32,8 +29,7 @@ const getAllSubCategory = async (req, res) => {
 
 const getSubCategoryByID = async (req, res) => {
     try {
-        const сategory = await SubCategory.findById(req.params.id);
-        console.log("subcat===", сategory);
+        const category = await SubCategory.findById(req.params.id);
 
         return res.status(200).send(data);
     } catch (error) {
@@ -42,12 +38,10 @@ const getSubCategoryByID = async (req, res) => {
 }
 
 const getSubCategoriesByCategoryID = async (req, res) => {
-    console.log(req.params.id, "req.params.id");
     try {
-        const сategory = await SubCategory.find({ categoryID: req.params.id });
-        console.log("subcat===", сategory);
+        const category = await SubCategory.find({ categoryID: req.params.id });
 
-        return res.status(200).send(сategory);
+        return res.status(200).send(category);
     } catch (error) {
         return res.status(400).send(error.toString());
     }
