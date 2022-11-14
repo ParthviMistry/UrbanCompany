@@ -9,7 +9,7 @@ export const getsearch = createAsyncThunk(
         "https://restcountries.com/v3.1/all",
         category
       );
-      console.log("response category==>", response);
+
       return response.data;
     } catch (e) {
       return getState.rejectWithValue(e.response.data);
