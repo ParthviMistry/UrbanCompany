@@ -1,15 +1,18 @@
+import { useLocation, useNavigate } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import tw from "twin.macro";
 import styled from "styled-components";
-import { css } from "styled-components/macro"; //eslint-disable-line
 import imgs from "../../images/HomePage.jpg";
 import Header, {
   LogoLink,
   NavLinks,
   NavLink as NavLinkBase,
 } from "../headers/light.js";
-import { useLocation, useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { getAllCategory } from "store/categorySlice";
+import { getsearch } from "store/searchSlice";
+import Autocomplete from "../../helpers/useAutoComplete";
+import _ from "lodash";
 
 const StyledHeader = styled(Header)`
   ${tw`justify-between`}
@@ -25,10 +28,6 @@ const NavLink = tw(NavLinkBase)`
 const Container = tw.div`relative -mx-8 -mt-8`;
 const TwoColumn = tw.div`flex flex-col lg:flex-row bg-gray-100`;
 const LeftColumn = tw.div`ml-8 mr-8 xl:pl-10 py-8`;
-// const RightColumn = styled.div`
-//   background-image: url("https://www.google.com/search?q=urban+company+jpg+image&tbm=isch&ved=2ahUKEwiCpKPt_aX7AhUqLrcAHc_UAeIQ2-cCegQIABAA&oq=urban+company+jpg+image&gs_lcp=CgNpbWcQAzoECCMQJzoFCAAQgAQ6BAgAEEM6BggAEAgQHjoHCAAQgAQQGFDEAVjGH2CbImgAcAB4AIAB6gGIAdoMkgEGMC4xMC4xmAEAoAEBqgELZ3dzLXdpei1pbWfAAQE&sclient=img&ei=cSxuY8KnJqrc3LUPz6mHkA4&bih=753&biw=1440#imgrc=ZOZqmztUudKN-M");
-//   ${tw`bg-green-500 bg-cover bg-center xl:ml-24 h-96 lg:h-auto lg:w-1/2 lg:flex-1`}
-// `;
 
 const RightColumn = styled.div((props) => [
   `background-image: url("${props.imageSrc}");`,
@@ -51,7 +50,7 @@ const Actions = styled.div`
     ${tw`mt-4 sm:mt-0 sm:ml-4 bg-gray-300 text-gray-700 hover:bg-gray-400 hover:text-gray-800`}
   }
   input {
-    ${tw`sm:pr-48 pl-8 py-4 sm:py-5 rounded-full border-2 w-full font-medium focus:outline-none transition duration-300  focus:border-primary-500 hover:border-gray-500`}
+    ${tw`sm:pr-48 pl-8 py-4 sm:py-5 rounded-full border-2 w-full font-medium focus:outline-none transition duration-300  focus:border-primary-500 hover:border-gray-500 `}
   }
   button {
     ${tw`w-full sm:absolute right-0 top-0 bottom-0 bg-primary-500 text-gray-100 font-bold mr-2 my-4 sm:my-2 rounded-full py-4 flex items-center justify-center sm:w-40 sm:leading-none focus:outline-none hover:bg-primary-900 transition duration-300`}
@@ -79,7 +78,55 @@ const FullWidthWithImage = ({
   secondaryActionUrl = "/login",
   secondaryActionText = "Login",
 }) => {
+  const dispatch = useDispatch();
+
+  const dataSearch = useSelector((state) => state?.search?.getdata);
+  const dataCategory = useSelector((state) => state?.category?.getdata);
+
+  useEffect(() => {
+    dispatch(getsearch());
+    dispatch(getAllCategory());
+  }, []);
+
+  const list =
+    dataCategory.length > 0 && dataCategory.map((item) => item.title);
+
+  const regionData = dataSearch?.map((item, index) => {
+    return item?.region;
+  });
+
+  const capitalData = dataSearch?.map((item, index) => {
+    return item?.capital?.[0];
+  });
+
+  let regionarray = _.uniqBy(regionData);
+
+  const capitalarray = _.uniqBy(capitalData, "label");
+
   const token = useSelector((state) => state.auth.token);
+
+  const Listbox = styled("ul")(({ theme }) => ({
+    width: 200,
+    margin: 0,
+    padding: 0,
+    zIndex: 1,
+    position: "absolute",
+    listStyle: "none",
+    backgroundColor: theme.palette?.mode === "white" ? "#fff" : "#000",
+    overflow: "auto",
+    maxHeight: 200,
+    border: "1px solid rgba(0,0,0,.25)",
+    "& li.Mui-focused": {
+      backgroundColor: "#4a8df6",
+      color: "white",
+      cursor: "pointer",
+    },
+    "& li:active": {
+      backgroundColor: "#2977f5",
+      color: "white",
+    },
+  }));
+
   const navLinks = [
     <NavLinks key={1}>
       <NavLink href="#">Home</NavLink>
@@ -100,6 +147,7 @@ const FullWidthWithImage = ({
       )}
     </NavLinks>,
   ];
+  
   return (
     <Container>
       <TwoColumn>
@@ -116,10 +164,24 @@ const FullWidthWithImage = ({
                 {secondaryActionText}
               </a>
             </Actions>
-            <Actions>
-              <input type="text" placeholder={{ secondaryActionText }} />
-              <button type="button">Search</button>
-            </Actions>
+            <div
+              style={{
+                justifycontent: "spacebetween",
+                display: "flex",
+                width: "80%",
+              }}
+            >
+              <Actions>
+                <Autocomplete suggestions={list} width="100px" />
+                {/* <SearchIcon/> */}
+              </Actions>
+              <Actions>
+                <Autocomplete
+                  suggestions={[...regionarray, ...capitalarray.slice(0, 10)]}
+                  width="50px"
+                />
+              </Actions>
+            </div>
           </Content>
         </LeftColumn>
         <RightColumn imageSrc={imgs}></RightColumn>
