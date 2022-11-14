@@ -11,7 +11,7 @@ const CategoryModal = ({ setDrawer, drawer }) => {
   const toggleDrawer = (anchor, open) => (event) => {
     setDrawer(!drawer);
   };
-
+  console.log("testing");
   const list = (anchor) => (
     <Box
       sx={{ width: anchor === "top" || anchor === "bottom" ? "auto" : 350 }}
