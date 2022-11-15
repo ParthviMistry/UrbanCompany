@@ -3,27 +3,12 @@ import React, { useEffect, useState } from "react";
 import tw from "twin.macro";
 import styled from "styled-components";
 import imgs from "../../images/HomePage.jpg";
-import Header, {
-  LogoLink,
-  NavLinks,
-  NavLink as NavLinkBase,
-} from "../headers/light.js";
 import { useSelector, useDispatch } from "react-redux";
 import { getAllCategory } from "store/categorySlice";
 import { getsearch } from "store/searchSlice";
 import Autocomplete from "../../helpers/useAutoComplete";
+import MainHeader from "../headers/main";
 import _ from "lodash";
-
-const StyledHeader = styled(Header)`
-  ${tw`justify-between`}
-  ${LogoLink} {
-    ${tw`mr-8 pb-0`}
-  }
-`;
-
-const NavLink = tw(NavLinkBase)`
-  sm:text-sm sm:mx-6
-`;
 
 const Container = tw.div`relative -mx-8 -mt-8`;
 const TwoColumn = tw.div`flex flex-col lg:flex-row bg-gray-100`;
@@ -56,13 +41,6 @@ const Actions = styled.div`
     ${tw`w-full sm:absolute right-0 top-0 bottom-0 bg-primary-500 text-gray-100 font-bold mr-2 my-4 sm:my-2 rounded-full py-4 flex items-center justify-center sm:w-40 sm:leading-none focus:outline-none hover:bg-primary-900 transition duration-300`}
   }
 `;
-
-const handleLogout = () => {
-  // const navigate = useNavigate();
-  localStorage.clear();
-  // navigate("/home");
-  console.log("logout");
-};
 
 const FullWidthWithImage = ({
   heading = (
@@ -103,34 +81,11 @@ const FullWidthWithImage = ({
 
   const capitalarray = _.uniqBy(capitalData, "label");
 
-  const token = useSelector((state) => state.auth.token);
-
-  const navLinks = [
-    <NavLinks key={1}>
-      <NavLink href="#">Home</NavLink>
-      <NavLink href="#">Blog</NavLink>
-      {token ? (
-        <NavLink
-          type="button"
-          className="btn loginButton"
-          href="/"
-          onClick={handleLogout}
-        >
-          Logout
-        </NavLink>
-      ) : (
-        <NavLink type="button" className="btn loginButton" href="/login">
-          Login
-        </NavLink>
-      )}
-    </NavLinks>,
-  ];
-
   return (
     <Container>
       <TwoColumn>
         <LeftColumn>
-          <StyledHeader links={navLinks} collapseBreakpointClass="sm" />
+          {/* <MainHeader /> */}
           <Content>
             <div
               style={{

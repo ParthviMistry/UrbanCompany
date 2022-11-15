@@ -15,8 +15,9 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import { Paper } from "@mui/material";
 import _ from "lodash";
+import MainHeader from "components/headers/main";
 
-const Container = tw.div`relative`;
+const Container = tw.div`relative -mx-8 -mt-8 mr-8 xl:pl-10 py-12`;
 const Content = tw.div`max-w-screen-xl mx-auto py-20 lg:py-24`;
 const TestimonialsContainer = tw.div`mt-16 lg:mt-0`;
 const Testimonials = styled.div``;
@@ -97,37 +98,43 @@ const CategoryPage = ({
     const [textSliderRef, setTextSliderRef] = useState(null);
 
     return (
-        <Container>
-            <Content>
-                <Box>
-                    <Divider />
-                    <TestimonialImageSlider arrows={false} ref={setImageSliderRef} asNavFor={textSliderRef} fade={true}>
-                        <img></img>
-                    </TestimonialImageSlider>
-                    <TextContainer textOnLeft={textOnLeft}>
-                        {
-                            data[0].categoryID[0].title
-                            // data.map((i) => {
-                            //     return (<HeadingInfo tw="hidden lg:block" subheading={subheading} heading={i.categoryID[0].title} description={i.categoryID[0].description} />)
-                            // })
-                        }
-                    </TextContainer>
-                    <Divider />
-                    <TextContainer textOnLeft={textOnLeft}>
-                        <Paper>
-                            {
-                                data.map((i) => {
-                                    return (<HeadingInfo tw="hidden lg:block" description={i.title} />)
-                                })
-                            }
-                        </Paper>
-                    </TextContainer>
-                </Box>
-            </Content>
-            <section>
-                <h1>Test image category</h1>
-            </section>
-        </Container>
+      <Container>
+        {/* <MainHeader /> */}
+        <Content>
+          <Box>
+            <Divider />
+            <TestimonialImageSlider
+              arrows={false}
+              ref={setImageSliderRef}
+              asNavFor={textSliderRef}
+              fade={true}
+            >
+              <img></img>
+            </TestimonialImageSlider>
+            <TextContainer textOnLeft={textOnLeft}>
+              {
+                data[0].categoryID[0].title
+                // data.map((i) => {
+                //     return (<HeadingInfo tw="hidden lg:block" subheading={subheading} heading={i.categoryID[0].title} description={i.categoryID[0].description} />)
+                // })
+              }
+            </TextContainer>
+            <Divider />
+            <TextContainer textOnLeft={textOnLeft}>
+              <Paper>
+                {data.map((i) => {
+                  return (
+                    <HeadingInfo tw="hidden lg:block" description={i.title} />
+                  );
+                })}
+              </Paper>
+            </TextContainer>
+          </Box>
+        </Content>
+        <section>
+          <h1>Test image category</h1>
+        </section>
+      </Container>
     );
 }
 export default CategoryPage;
