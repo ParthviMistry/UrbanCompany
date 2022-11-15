@@ -5,13 +5,11 @@ var path = require("path");
 
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    console.log("dest==>",file);
     cb(null, "./public/images");
   },
   filename: function (req, file, cb) {
     //var uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9) + path.extname(file.originalname);
     var uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
-    console.log("uniqueSuffix------", uniqueSuffix);
     cb(null, file.fieldname + "-" + uniqueSuffix + ".jpg");
   },
 });

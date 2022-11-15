@@ -15,7 +15,7 @@ const createMainTitle = async (req, res) => {
 
 const getAllMainTitle = async (req, res) => {
   try {
-    const data = await Category.find();
+    const data = await MainTitle.find();
 
     return res.status(200).send(data);
   } catch (error) {
@@ -25,7 +25,7 @@ const getAllMainTitle = async (req, res) => {
 
 const getMAinTitleByID = async (req, res) => {
   try {
-    const category = await Category.findById(req.params.id);
+    const category = await MainTitle.findById(req.params.id);
     return res.status(200).send(category);
   } catch (error) {
     return res.status(400).send(error.toString());
@@ -34,7 +34,7 @@ const getMAinTitleByID = async (req, res) => {
 
 const updateMainTitle = async (req, res) => {
   try {
-    const updatedCategory = await Category.findByIdAndUpdate(
+    const updatedCategory = await MainTitle.findByIdAndUpdate(
       req.params.id,
       {
         $set: req.body,
@@ -52,7 +52,7 @@ const updateMainTitle = async (req, res) => {
 
 const deleteMainTitle = async (req, res) => {
   try {
-    const deletedCategory = await Category.findByIdAndDelete(req.params.id);
+    const deletedCategory = await MainTitle.findByIdAndDelete(req.params.id);
 
     return res
       .status(200)

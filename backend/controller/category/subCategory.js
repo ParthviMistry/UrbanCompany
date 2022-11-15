@@ -1,14 +1,16 @@
 const SubCategory = require("../../models/SubCategory");
+const cloudinary = require("../../utils/cloudnary");
 
 const createSubCategory = async (req, res) => {
     try {
-        const { title, categoryID, description, image } = req.body;
+        const image = await cloudinary.uploader.upload(req.file.path);
+        const { title, categoryID, description } = req.body;
 
         if (!title || !categoryID || !description) {
             throw new Error("Please enter all value");
         }
 
-        const postSubCategory = new SubCategory(req.body);
+        const postSubCategory = new SubCategory({ ...req.body, image });
         await postSubCategory.save();
 
         return res.status(200).send({ message: "SubCategory Created successfully!!", postSubCategory });
@@ -48,11 +50,13 @@ const getSubCategoriesByCategoryID = async (req, res) => {
 }
 
 const updateSubCategory = async (req, res) => {
+    const image = await cloudinary.uploader.upload(req.file.path);
+    console.log("image==>", image);
     try {
         const updatedSubCategory = await SubCategory.findByIdAndUpdate(
             req.params.id,
             {
-                $set: req.body,
+                $set: { ...req.body, image: image.url },
             },
             { new: true }
         );

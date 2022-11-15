@@ -17,19 +17,19 @@ Router.delete("/api/deleteUser/:id", authController.deleteUser);
 
 //MainTitle
 Router.post("/api/mainTitle", MainTitleController.createMainTitle);
-Router.get("/api/mainTitle", MainTitleController.getAllMainTitle);
-Router.put("/api/mainTitle", MainTitleController.updateMainTitle);
-Router.delete("/api/mainTitle", MainTitleController.deleteMainTitle);
+Router.get("/api/getAllMainTitle", MainTitleController.getAllMainTitle);
+Router.put("/api/updateMainTitle", MainTitleController.updateMainTitle);
+Router.delete("/api/deleteMainTitle", MainTitleController.deleteMainTitle);
 
 //Category
-Router.post("/api/category",upload.single("image"), categoryController.createCategory);
+Router.post("/api/category", upload.single("image"), categoryController.createCategory);
 Router.get("/api/getAllCategory", categoryController.getAllCategory);
 Router.get("/api/getCategoryByID/:id", categoryController.getCategoryByID);
-Router.put("/api/updateCategory/:id", categoryController.updatecategory);
+Router.put("/api/updateCategory/:id", upload.single("image"), categoryController.updatecategory);
 Router.delete("/api/deleteCategory/:id", categoryController.deletecategory);
 
 //SubCategory
-Router.post("/api/subCategory", subCategoryController.createSubCategory);
+Router.post("/api/subCategory", upload.single("image"), subCategoryController.createSubCategory);
 Router.get("/api/getAllSubCategory", subCategoryController.getAllSubCategory);
 Router.get(
   "/api/getSubCategoryById/:id",
@@ -37,6 +37,7 @@ Router.get(
 );
 Router.put(
   "/api/updateSubCategory/:id",
+  upload.single("image"),
   subCategoryController.updateSubCategory
 );
 Router.delete(
