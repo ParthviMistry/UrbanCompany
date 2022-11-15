@@ -16,8 +16,9 @@ import ListItemText from '@mui/material/ListItemText';
 import { Paper } from "@mui/material";
 import _ from "lodash";
 import MainHeader from "components/headers/main";
+import Footer from "components/footers/MiniCenteredFooter.js";
 
-const Container = tw.div`relative -mx-8 -mt-8 mr-8 xl:pl-10 py-12`;
+const Container = tw.div`relative -mx-8 -mt-8 mr-8 xl:pl-10`;
 const Content = tw.div`max-w-screen-xl mx-auto py-20 lg:py-24`;
 const TestimonialsContainer = tw.div`mt-16 lg:mt-0`;
 const Testimonials = styled.div``;
@@ -134,6 +135,7 @@ const CategoryPage = ({
         <section>
           <h1>Test image category</h1>
         </section>
+        <Footer/>
       </Container>
     );
 }
