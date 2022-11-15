@@ -135,7 +135,7 @@ export default () => {
           {data?.length &&
             data.map((card, index) => (
               <Card key={index} onClick={() => handleDrawer(card?._id)}>
-                <CardImage imageSrc={card.imageSrc} />
+                <CardImage imageSrc={card.image} />
                 <TextInfo>
                   <TitleReviewContainer>
                     <Title>{card.title}</Title>

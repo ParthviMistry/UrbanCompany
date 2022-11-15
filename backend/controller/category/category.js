@@ -1,16 +1,20 @@
 const Category = require("../../models/Category");
+const cloudinary = require("../../utils/cloudnary");
+
 
 const createCategory = async (req, res) => {
     try {
+    let  image = await cloudinary.uploader.upload(req.file.path);
+   
         const { title, description, mainTitleId } = req.body;
 
         if (!title || !description || !mainTitleId) {
           throw new Error("Please enter all value");
         }
 
-        const postCategory = new Category(req.body);
+        const postCategory = new Category({...req.body,image: image.url});
         await postCategory.save();
-
+            console.log("...postcat",postCategory)
         return res.status(200).send({ message: "Category Created successfully!!", postCategory });
     } catch (error) {
         return res.status(400).send(error.toString());

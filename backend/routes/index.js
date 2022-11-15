@@ -4,6 +4,7 @@ const subCategoryController = require("../controller/category/subCategory");
 const MainTitleController = require("../controller/mainTitle");
 const authController = require("../controller/authentication");
 const auth = require("../middleware/Auth");
+const upload = require("../utils/multer");
 
 const Router = express.Router();
 Router.use(express.json());
@@ -21,7 +22,7 @@ Router.put("/api/mainTitle", MainTitleController.updateMainTitle);
 Router.delete("/api/mainTitle", MainTitleController.deleteMainTitle);
 
 //Category
-Router.post("/api/category", categoryController.createCategory);
+Router.post("/api/category",upload.single("image"), categoryController.createCategory);
 Router.get("/api/getAllCategory", categoryController.getAllCategory);
 Router.get("/api/getCategoryByID/:id", categoryController.getCategoryByID);
 Router.put("/api/updateCategory/:id", categoryController.updatecategory);
