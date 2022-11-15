@@ -105,28 +105,6 @@ const FullWidthWithImage = ({
 
   const token = useSelector((state) => state.auth.token);
 
-  const Listbox = styled("ul")(({ theme }) => ({
-    width: 200,
-    margin: 0,
-    padding: 0,
-    zIndex: 1,
-    position: "absolute",
-    listStyle: "none",
-    backgroundColor: theme.palette?.mode === "white" ? "#fff" : "#000",
-    overflow: "auto",
-    maxHeight: 200,
-    border: "1px solid rgba(0,0,0,.25)",
-    "& li.Mui-focused": {
-      backgroundColor: "#4a8df6",
-      color: "white",
-      cursor: "pointer",
-    },
-    "& li:active": {
-      backgroundColor: "#2977f5",
-      color: "white",
-    },
-  }));
-
   const navLinks = [
     <NavLinks key={1}>
       <NavLink href="#">Home</NavLink>
@@ -147,13 +125,34 @@ const FullWidthWithImage = ({
       )}
     </NavLinks>,
   ];
-  
+
   return (
     <Container>
       <TwoColumn>
         <LeftColumn>
           <StyledHeader links={navLinks} collapseBreakpointClass="sm" />
           <Content>
+            <div
+              style={{
+                display: "flex",
+                marginBottom: "7%",
+                justifyContent: "space-around",
+              }}
+            >
+              <div style={{ width: "30%" }}>
+                <Actions>
+                  <Autocomplete
+                    suggestions={[...regionarray, ...capitalarray.slice(0, 10)]}
+                    width="50px"
+                  />
+                </Actions>
+              </div>
+              <div style={{ width: "67%" }}>
+                <Actions>
+                  <Autocomplete suggestions={list} isBorder={true} />
+                </Actions>
+              </div>
+            </div>
             <Heading>{heading}</Heading>
             <Paragraph>{description}</Paragraph>
             <Actions>
@@ -164,24 +163,6 @@ const FullWidthWithImage = ({
                 {secondaryActionText}
               </a>
             </Actions>
-            <div
-              style={{
-                justifycontent: "spacebetween",
-                display: "flex",
-                width: "80%",
-              }}
-            >
-              <Actions>
-                <Autocomplete suggestions={list} width="100px" />
-                {/* <SearchIcon/> */}
-              </Actions>
-              <Actions>
-                <Autocomplete
-                  suggestions={[...regionarray, ...capitalarray.slice(0, 10)]}
-                  width="50px"
-                />
-              </Actions>
-            </div>
           </Content>
         </LeftColumn>
         <RightColumn imageSrc={imgs}></RightColumn>

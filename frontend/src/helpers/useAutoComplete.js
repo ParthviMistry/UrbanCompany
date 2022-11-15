@@ -1,4 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { TextField } from "@mui/material";
+import InputAdornment from "@mui/material/InputAdornment";
+import SearchIcon from "@mui/icons-material/Search";
 
 const Autocomplete = (props) => {
   const [active, setActive] = useState(0);
@@ -39,7 +42,12 @@ const Autocomplete = (props) => {
                 className = "active";
               }
               return (
-                <li className={className} key={suggestion} onClick={onClick}>
+                <li
+                  className={className}
+                  key={suggestion}
+                  onClick={onClick}
+                  style={{ display: "flex", paddingLeft: "40px" }}
+                >
                   {suggestion}
                 </li>
               );
@@ -58,14 +66,27 @@ const Autocomplete = (props) => {
 
   return (
     <>
-      <input
+      <TextField
+        fullWidth
+        //  className={!props.isBorder ? "inputRounded" : "inputRounded"}
+        placeholder={props.isBorder ? "Search Category" : "Search Region"}
         type="text"
+        variant="outlined"
         onChange={onChange}
         value={input}
-        //  InputProps={{
-        //     startAdornment: <InputAdornment position="end"><SearchIcon/></InputAdornment>,
-        //   }}
-        autoComplete={false}
+        InputProps={
+          props.isBorder
+            ? {
+                startAdornment: (
+                  <InputAdornment position="end">
+                    <SearchIcon />
+                  </InputAdornment>
+                ),
+              }
+            : ""
+        }
+        inputProps={{ style: { paddingRight: 0 } }}
+        autoComplete={"nope"}
       />
       {renderAutocomplete()}
     </>
