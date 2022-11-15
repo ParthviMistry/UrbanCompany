@@ -39,7 +39,7 @@ const getSubCategoryByID = async (req, res) => {
 
 const getSubCategoriesByCategoryID = async (req, res) => {
     try {
-        const category = await SubCategory.find({ categoryID: req.params.id });
+        const category = await SubCategory.find({ categoryID: req.params.id }).populate("categoryID");
 
         return res.status(200).send(category);
     } catch (error) {

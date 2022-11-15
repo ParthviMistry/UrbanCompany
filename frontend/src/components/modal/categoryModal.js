@@ -21,7 +21,7 @@ const CategoryModal = ({ setDrawer, drawer }) => {
 
   const handleClick = () => {
     console.log("click");
-    navigate("/")
+    navigate("/category")
   }
 
   const list = (anchor) => (
