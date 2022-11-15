@@ -17,6 +17,7 @@
     "feather-icons": "^4.29.0",
     "framer-motion": "^7.3.2",
     "hoist-non-react-statics": "^3.3.2",
+    "lodash": "^4.17.21",
     "primereact": "^8.7.2",
     "prop-types": "^15.8.1",
     "react": "^18.0.0",

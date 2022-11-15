@@ -31,6 +31,23 @@ const Autocomplete = (props) => {
     setInput(e.currentTarget.innerText);
   };
 
+  const onKeyDown = e => {
+    if (e.keyCode === 13) { // enter key
+      setActive(0);
+      setIsShow(false);
+      setInput(filtered[active])
+      console.log("1");
+    }
+    else if (e.keyCode === 38) { // up arrow
+      console.log("2");
+      return (active === 0) ? null : setActive(active - 1);
+    }
+    else if (e.keyCode === 40) { // down arrow
+      console.log("3");
+      return (active - 1 === filtered.length) ? null : setActive(active + 1);
+    }
+  };
+
   const renderAutocomplete = () => {
     if (isShow && input) {
       if (filtered.length) {
@@ -46,9 +63,10 @@ const Autocomplete = (props) => {
                   className={className}
                   key={suggestion}
                   onClick={onClick}
-                  style={{ display: "flex", paddingLeft: "40px" }}
                 >
-                  {suggestion}
+                  <ui style={{ display: "flex", paddingLeft: "40px", background: "#e2e8f0" }}>
+                    {suggestion}
+                  </ui>
                 </li>
               );
             })}
@@ -73,16 +91,17 @@ const Autocomplete = (props) => {
         type="text"
         variant="outlined"
         onChange={onChange}
+        onKeyDown={onKeyDown}
         value={input}
         InputProps={
           props.isBorder
             ? {
-                startAdornment: (
-                  <InputAdornment position="end">
-                    <SearchIcon />
-                  </InputAdornment>
-                ),
-              }
+              startAdornment: (
+                <InputAdornment position="end">
+                  <SearchIcon />
+                </InputAdornment>
+              ),
+            }
             : ""
         }
         inputProps={{ style: { paddingRight: 0 } }}

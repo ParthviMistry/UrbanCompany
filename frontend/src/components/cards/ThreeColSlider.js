@@ -38,16 +38,16 @@ const CardSlider = styled(Slider)`
     ${tw`flex`}
   }
   .slick-slide {
-    ${tw`h-auto flex justify-center mb-1`}
+    ${tw`h-64 flex justify-center mb-1`}
   }
 `;
-const Card = tw.div`h-full flex! flex-col sm:border max-w-sm sm:rounded-tl-4xl sm:rounded-br-5xl relative focus:outline-none`;
+const Card = tw.div`h-full w-1/4 flex! flex-col sm:border max-w-sm sm:rounded-tl-4xl sm:rounded-br-5xl relative focus:outline-none`;
 const CardImage = styled.div((props) => [
   `background-image: url("${props.imageSrc}");`,
   tw`w-full h-56 sm:h-64 bg-cover bg-center rounded sm:rounded-none sm:rounded-tl-4xl`,
 ]);
 
-const TextInfo = tw.div`py-6 sm:px-10 sm:py-6`;
+const TextInfo = tw.div`sm:px-10 sm:py-4`;
 const TitleReviewContainer = tw.div`flex flex-col sm:flex-row sm:justify-between sm:items-center`;
 const Title = tw.h5`text-2xl font-bold`;
 
@@ -145,8 +145,9 @@ export default () => {
                     </RatingsInfo>
                   </TitleReviewContainer>
                   <Description>{card.description}</Description>
+                  <Description style={{ fontWeight: "bold" }}>View more...</Description>
                 </TextInfo>
-                <PrimaryButton>View more</PrimaryButton>
+                {/* <PrimaryButton>View more</PrimaryButton> */}
               </Card>
             ))}
         </CardSlider>

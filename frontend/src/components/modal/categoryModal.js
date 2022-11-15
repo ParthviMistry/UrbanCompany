@@ -9,6 +9,13 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
+import styled from "styled-components";
+import tw from "twin.macro";
+
+const CardImage = styled.div((props) => [
+  `background-image: url("${props.imageSrc}");`,
+  tw`w-10 h-10 sm:h-10 bg-cover bg-center rounded sm:rounded-none pr-2`,
+]);
 
 const CategoryModal = ({ setDrawer, drawer }) => {
   const navigate = useNavigate();
@@ -32,12 +39,14 @@ const CategoryModal = ({ setDrawer, drawer }) => {
       onKeyDown={toggleDrawer(anchor, false)}
     >
       <ArrowBackIcon fontSize="bold" sx={{ m: "15px" }} />
+      {data.length > 0 && data.map((i) => i.categoryID[0].title)}
       <Divider />
       <List>
         {data.length > 0 && data.map((i) => (
           <ListItem>
             <ListItemButton onClick={() => handleClick()}>
-              <ListItemText fontSize="bold" primary={i.title} />
+              <CardImage imageSrc={i.image} />
+              <ListItemText fontSize="bold" primary={i.title} style={{ paddingLeft: "20px" }} />
             </ListItemButton>
           </ListItem>
         ))}

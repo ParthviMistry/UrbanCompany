@@ -14,6 +14,7 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import { Paper } from "@mui/material";
+import _ from "lodash";
 
 const Container = tw.div`relative`;
 const Content = tw.div`max-w-screen-xl mx-auto py-20 lg:py-24`;
@@ -105,9 +106,10 @@ const CategoryPage = ({
                     </TestimonialImageSlider>
                     <TextContainer textOnLeft={textOnLeft}>
                         {
-                            data.map((i) => {
-                                return (<HeadingInfo tw="hidden lg:block" subheading={subheading} heading={i.categoryID[0].title} description={i.categoryID[0].description} />)
-                            })
+                            data[0].categoryID[0].title
+                            // data.map((i) => {
+                            //     return (<HeadingInfo tw="hidden lg:block" subheading={subheading} heading={i.categoryID[0].title} description={i.categoryID[0].description} />)
+                            // })
                         }
                     </TextContainer>
                     <Divider />
