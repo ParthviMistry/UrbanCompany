@@ -7,7 +7,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { getAllCategory } from "store/categorySlice";
 import { getsearch } from "store/searchSlice";
 import Autocomplete from "../../helpers/useAutoComplete";
-import UsAuto from "../../helpers/useAuto";
+import CategorySearch from "../../helpers/categorySearch";
 import _ from "lodash";
 
 const Container = tw.div`relative -mx-8 -mt-8`;
@@ -58,7 +58,6 @@ const FullWidthWithImage = ({
 }) => {
   const dispatch = useDispatch();
 
-  const dataSearch = useSelector((state) => state?.search?.getdata);
   const dataCategory = useSelector((state) => state?.category?.getdata);
 
   useEffect(() => {
@@ -66,23 +65,7 @@ const FullWidthWithImage = ({
     dispatch(getAllCategory());
   }, []);
 
-  const list =
-    dataCategory.length > 0 && dataCategory.map((item) => item.title);
-
-  const regionData = dataSearch?.map((item, index) => {
-    return {label : item?.region , value : item?.region}
-  });
-
-  const capitalData = dataSearch?.map((item, index) => {
-    return item?.capital?.[0];
-  });
-
-  let regionarray = _.uniqBy(regionData);
-
-  const capitalarray = _.uniqBy(capitalData, "label");
-
-  const token = useSelector((state) => state.auth.token);
-
+  const categoryFilter = dataCategory.length > 0 && dataCategory.map((item) => { return { label: item.title } });
 
   return (
     <Container>
@@ -97,12 +80,10 @@ const FullWidthWithImage = ({
               }}
             >
               <div style={{ width: "30%" }}>
-                <Autocomplete
-                  />
+                <Autocomplete />
               </div>
               <div style={{ width: "67%" }}>
-               
-                  <UsAuto category={list}/>
+                <CategorySearch category={categoryFilter} />
               </div>
             </div>
             <Heading>{heading}</Heading>

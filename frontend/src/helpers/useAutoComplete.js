@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Dropdown } from "primereact/dropdown";
-import "../styles/Dropdown.css";
 import { Country, State, City } from "country-state-city";
+import "../styles/Dropdown.css";
 
 const Autocomplete = () => {
   const [lazyItvaems, setLazyItems] = useState([]);
