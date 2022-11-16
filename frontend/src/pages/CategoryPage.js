@@ -17,22 +17,11 @@ import { Paper } from "@mui/material";
 import _ from "lodash";
 import MainHeader from "components/headers/main";
 import Footer from "components/footers/MiniCenteredFooter.js";
+import { Card } from 'primereact/card';
 
 const Container = tw.div`relative -mx-8 -mt-8 mr-8 xl:pl-10`;
 const Content = tw.div`max-w-screen-xl mx-auto py-20 lg:py-24`;
-const TestimonialsContainer = tw.div`mt-16 lg:mt-0`;
-const Testimonials = styled.div``;
-const Testimonial = tw.div`max-w-md lg:max-w-none mx-auto lg:mx-0 flex flex-col items-center lg:items-stretch lg:flex-row`;
 
-const TestimonialImageSlider = tw(Slider)`w-full lg:w-5/12 flex-shrink-0 `;
-const TestimonialTextSlider = tw(Slider)``;
-const TestimonialText = tw.div`outline-none`;
-
-const ImageAndControlContainer = tw.div`relative outline-none`;
-const Image = styled.div(props => [
-    `background-image: url("${props.imageSrc}");`,
-    tw`rounded bg-cover bg-center h-80 sm:h-96 lg:h-144`
-]);
 
 const Row = tw.div`flex flex-col lg:flex-row -mb-10`;
 const Heading = tw(SectionHeading)`text-left lg:text-4xl xl:text-5xl`;
@@ -70,8 +59,8 @@ const AuthorProfile = tw.p`text-secondary-100 text-sm`;
 const PostTextContainer = tw.div``
 
 const TextContainer = styled.div(props => [
-    tw`flex flex-col w-full lg:w-7/12`,
-    props.textOnLeft ? tw`lg:pr-12 lg:order-first` : tw`lg:pl-12 lg:order-last`
+  tw`flex flex-col w-full lg:w-7/12`,
+  props.textOnLeft ? tw`lg:pr-12 lg:order-first` : tw`lg:pl-12 lg:order-last`
 ]);
 
 const Subheading = tw(SubheadingBase)`mb-4`;
@@ -86,65 +75,61 @@ const CustomerName = tw.h5`font-semibold text-xl lg:text-2xl xl:text-3xl text-pr
 const CustomerTitle = tw.p`font-medium text-secondary-100`;
 
 const CategoryPage = ({
-    subheading = "",
-    heading = "",
-    description = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-    testimonials = null,
-    textOnLeft = false
+  subheading = "",
+  heading = "",
+  description = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+  testimonials = null,
+  textOnLeft = false
 }) => {
-    const data = useSelector((state) => state?.category?.getDataByCategory);
-    console.log("reduc category data ==>", data);
+  const data = useSelector((state) => state?.category?.getDataByCategory);
+  console.log("reduc category data ==>", data);
 
-    const [imageSliderRef, setImageSliderRef] = useState(null);
-    const [textSliderRef, setTextSliderRef] = useState(null);
+  const [imageSliderRef, setImageSliderRef] = useState(null);
+  const [textSliderRef, setTextSliderRef] = useState(null);
 
-    return (
-      <Container>
-        {/* <MainHeader /> */}
-        <Content>
-          <Box>
-            <Divider />
-            <TestimonialImageSlider
-              arrows={false}
-              ref={setImageSliderRef}
-              asNavFor={textSliderRef}
-              fade={true}
-            >
-              <img></img>
-            </TestimonialImageSlider>
-            <TextContainer textOnLeft={textOnLeft}>
-              {
-                data[0].categoryID[0].title
-                // data.map((i) => {
-                //     return (<HeadingInfo tw="hidden lg:block" subheading={subheading} heading={i.categoryID[0].title} description={i.categoryID[0].description} />)
-                // })
-              }
-            </TextContainer>
-            <Divider />
-            <TextContainer textOnLeft={textOnLeft}>
-              <Paper>
-                {data.map((i) => {
-                  return (
-                    <HeadingInfo tw="hidden lg:block" description={i.title} />
-                  );
-                })}
-              </Paper>
-            </TextContainer>
-          </Box>
-        </Content>
-        <section>
-          <h1>Test image category</h1>
-        </section>
-        <Footer/>
-      </Container>
-    );
+  return (
+    <Container>
+      {/* <MainHeader /> */}
+      <Content>
+        <Box>
+          <Card title={data[0].categoryID[0].title} style={{ width: "100%" }} >
+            <div style={{ marginBottom: '2em', display: 'flex', padding: "20px" }}>
+              <img alt="Card" src={data[0].categoryID[0].image} width="300px" height="300px" />
+              <p style={{ marginLeft: '20px' }}>
+                {data[0].categoryID[0].description}
+              </p>
+            </div>
+          </Card>
+          <Divider />
+          <HeadingInfo tw="hidden lg:block" subheading="SubCategory" />
+          <div style={{ marginBottom: '2em', display: 'flex', padding: "20px" }}>
+            {data.map((i) => {
+              return (
+                <Paper title={i.title} style={{ marginLeft: "20px" }}>
+                  <img alt="Card" style={{ padding: '20px' }} src={i.image} width="150px" height="200px" />
+                  <p style={{ padding: "20px" }}>
+                    {i.title}
+                  </p>
+                </Paper>
+              );
+            })}
+          </div>
+          <Divider />
+        </Box>
+      </Content>
+      <section>
+        <h1>Test image category</h1>
+      </section>
+      <Footer />
+    </Container >
+  );
 }
 export default CategoryPage;
 
 const HeadingInfo = ({ subheading, heading, description, ...props }) => (
-    <div>
-        {subheading ? <Subheading>{subheading}</Subheading> : null}
-        <HeadingTitle>{heading}</HeadingTitle>
-        <Description>{description}</Description>
-    </div>
+  <div>
+    {subheading ? <Subheading>{subheading}</Subheading> : null}
+    <HeadingTitle>{heading}</HeadingTitle>
+    <Description>{description}</Description>
+  </div>
 );

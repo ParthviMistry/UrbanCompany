@@ -11,6 +11,10 @@ import SignUp from "pages/Signup";
 import CategoryPage from "pages/CategoryPage";
 import MainHeader from "components/headers/main";
 
+import 'primereact/resources/themes/lara-light-indigo/theme.css';
+import 'primereact/resources/primereact.min.css';
+import 'primeicons/primeicons.css';
+
 const Container = tw.div`relative -mx-8 -mt-8 mr-8 xl:pl-10 pt-12`;
 
 export default function App() {
