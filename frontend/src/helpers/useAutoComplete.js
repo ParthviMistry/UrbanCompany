@@ -1,115 +1,81 @@
-import React, { useEffect, useState } from "react";
-import { TextField } from "@mui/material";
-import InputAdornment from "@mui/material/InputAdornment";
-import SearchIcon from "@mui/icons-material/Search";
+import React, { useState, useEffect, useRef } from "react";
+import { Dropdown } from "primereact/dropdown";
+import "../styles/Dropdown.css";
+import { Country, State, City } from "country-state-city";
 
-const Autocomplete = (props) => {
-  const [active, setActive] = useState(0);
-  const [filtered, setFiltered] = useState([]);
-  const [isShow, setIsShow] = useState(false);
-  const [input, setInput] = useState("");
+const Autocomplete = () => {
+  const [lazyItvaems, setLazyItems] = useState([]);
+  const [value, setValue] = useState("");
+  const [lazyLoading, setLazyLoading] = useState(false);
+  const [selectedCountry, setSelectedCountry] = useState(null);
 
-  const onChange = (e) => {
-    const { suggestions } = props;
+  const Countrylist =
+    Country.getAllCountries().length > 0 &&
+    Country.getAllCountries().map((item) => {
+      return { name: item.name, code: item.isoCode };
+    });
 
-    const input = e.currentTarget.value;
+  const Statelist =
+    City.getAllCities().length > 0 &&
+    City.getAllCities().map((item) => {
+      return { name: item.name, code: item.isoCode };
+    });
 
-    const newFilteredSuggestions = suggestions.filter(
-      (suggestion) => suggestion.toLowerCase().indexOf(input.toLowerCase()) > -1
+  useEffect(() => {
+    setLazyItems(Array.from({ length: 100000 }));
+    setLazyLoading(false);
+  }, []);
+
+  const onCountryChange = (e) => {
+    setSelectedCountry(e.value);
+  };
+
+  const selectedCountryTemplate = (option, props) => {
+    if (option) {
+      return (
+        <div className="country-item country-item-value">
+          {/* <img alt={option.name} src="images/flag/flag_placeholder.png" onError={(e) => e.target.src = 'https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png'} className={`flag flag-${option.code.toLowerCase()}`} /> */}
+          <div>{option.name}</div>
+        </div>
+      );
+    }
+
+    return <span>{props.placeholder}</span>;
+  };
+
+  const countryOptionTemplate = (option) => {
+    return (
+      <div className="country-item">
+        {/* <img alt={option.name} src="images/flag/flag_placeholder.png" onError={(e) => e.target.src = 'https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png'} className={`flag flag-${option.code.toLowerCase()}`} /> */}
+        <div>{option.name}</div>
+      </div>
     );
-
-    setActive(0);
-    setFiltered(newFilteredSuggestions);
-    setIsShow(true);
-    setInput(e.currentTarget.value);
   };
 
-  const onClick = (e) => {
-    setActive(0);
-    setFiltered([]);
-    setIsShow(false);
-    setInput(e.currentTarget.innerText);
-  };
-
-  const onKeyDown = e => {
-    if (e.keyCode === 13) { // enter key
-      setActive(0);
-      setIsShow(false);
-      setInput(filtered[active])
-      console.log("1");
-    }
-    else if (e.keyCode === 38) { // up arrow
-      console.log("2");
-      return (active === 0) ? null : setActive(active - 1);
-    }
-    else if (e.keyCode === 40) { // down arrow
-      console.log("3");
-      return (active - 1 === filtered.length) ? null : setActive(active + 1);
-    }
-  };
-
-  const renderAutocomplete = () => {
-    if (isShow && input) {
-      if (filtered.length) {
-        return (
-          <ul className="autocomplete">
-            {filtered.map((suggestion, index) => {
-              let className;
-              if (index === active) {
-                className = "active";
-              }
-              return (
-                <li
-                  className={className}
-                  key={suggestion}
-                  onClick={onClick}
-                >
-                  <ui style={{ display: "flex", paddingLeft: "40px", background: "#e2e8f0" }}>
-                    {suggestion}
-                  </ui>
-                </li>
-              );
-            })}
-          </ul>
-        );
-      } else {
-        return (
-          <div className="no-autocomplete">
-            <em>Not found</em>
-          </div>
-        );
-      }
-    }
+  const handleSelect = (e) => {
+    setValue(e.target.value);
   };
 
   return (
-    <>
-      <TextField
-        fullWidth
-        //  className={!props.isBorder ? "inputRounded" : "inputRounded"}
-        placeholder={props.isBorder ? "Search Category" : "Search Region"}
-        type="text"
-        variant="outlined"
-        onChange={onChange}
-        onKeyDown={onKeyDown}
-        value={input}
-        InputProps={
-          props.isBorder
-            ? {
-              startAdornment: (
-                <InputAdornment position="end">
-                  <SearchIcon />
-                </InputAdornment>
-              ),
-            }
-            : ""
-        }
-        inputProps={{ style: { paddingRight: 0 } }}
-        autoComplete={"nope"}
-      />
-      {renderAutocomplete()}
-    </>
+    <div className="dropdown-demo">
+      <div className="card">
+        <Dropdown
+          style={{ width: "100%", padding: "4px" }}
+          value={selectedCountry}
+          options={[...Countrylist, ...Statelist]}
+          onChange={onCountryChange}
+          virtualScrollerOptions={{ itemSize: 38 }}
+          optionLabel="name"
+          filter
+          onSelect={handleSelect}
+          showClear
+          filterBy="name"
+          placeholder="Select a Country"
+          valueTemplate={selectedCountryTemplate}
+          itemTemplate={countryOptionTemplate}
+        />
+      </div>
+    </div>
   );
 };
-
 export default Autocomplete;
