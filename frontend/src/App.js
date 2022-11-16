@@ -10,6 +10,7 @@ import Login from "../src/pages/Login";
 import SignUp from "pages/Signup";
 import CategoryPage from "pages/CategoryPage";
 import MainHeader from "components/headers/main";
+import MiniCenteredFooter from "components/footers/MiniCenteredFooter";
 
 import 'primereact/resources/themes/lara-light-indigo/theme.css';
 import 'primereact/resources/primereact.min.css';
@@ -34,6 +35,7 @@ export default function App() {
             <Route path="/category/" element={<CategoryPage />} />
           </Routes>
         </Router>
+        <MiniCenteredFooter />
       </Provider>
     </>
   );

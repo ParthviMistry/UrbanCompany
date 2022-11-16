@@ -6,7 +6,7 @@ import tw from "twin.macro";
 import { motion } from "framer-motion";
 import useInView from "helpers/useInView";
 
-const StyledDiv = tw.div`font-display min-h-screen text-secondary-500 p-8 overflow-hidden`;
+const StyledDiv = tw.div`font-display min-h-screen text-secondary-500 overflow-hidden`;
 function AnimationReveal({ disabled, children }) {
   if (disabled) {
     return <>{children}</>;
@@ -26,7 +26,7 @@ function AnimationReveal({ disabled, children }) {
 }
 
 function AnimatedSlideInComponent({ direction = "left", offset = 30, children }) {
-  const [ref, inView] = useInView({ margin: `-${offset}px 0px 0px 0px`});
+  const [ref, inView] = useInView({ margin: `-${offset}px 0px 0px 0px` });
 
   const x = { target: "0%" };
 
@@ -37,9 +37,9 @@ function AnimatedSlideInComponent({ direction = "left", offset = 30, children })
     <div ref={ref}>
       <motion.section
         initial={{ x: x.initial }}
-        animate={{ 
+        animate={{
           x: inView && x.target,
-          transitionEnd:{
+          transitionEnd: {
             x: inView && 0
           }
         }}

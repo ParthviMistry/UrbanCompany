@@ -1,5 +1,5 @@
 import { createGlobalStyle } from 'styled-components'
-import  { globalStyles } from 'twin.macro'
+import { globalStyles } from 'twin.macro'
 
 const GlobalStyles = createGlobalStyle(globalStyles, `
    /* Below animations are for modal created using React-Modal */
