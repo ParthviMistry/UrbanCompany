@@ -7,6 +7,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { getAllCategory } from "store/categorySlice";
 import { getsearch } from "store/searchSlice";
 import Autocomplete from "../../helpers/useAutoComplete";
+import UsAuto from "../../helpers/useAuto";
 import _ from "lodash";
 
 const Container = tw.div`relative -mx-8 -mt-8`;
@@ -69,7 +70,7 @@ const FullWidthWithImage = ({
     dataCategory.length > 0 && dataCategory.map((item) => item.title);
 
   const regionData = dataSearch?.map((item, index) => {
-    return item?.region;
+    return {label : item?.region , value : item?.region}
   });
 
   const capitalData = dataSearch?.map((item, index) => {
@@ -79,6 +80,9 @@ const FullWidthWithImage = ({
   let regionarray = _.uniqBy(regionData);
 
   const capitalarray = _.uniqBy(capitalData, "label");
+
+  const token = useSelector((state) => state.auth.token);
+
 
   return (
     <Container>
@@ -93,17 +97,12 @@ const FullWidthWithImage = ({
               }}
             >
               <div style={{ width: "30%" }}>
-                <Actions>
-                  <Autocomplete
-                    suggestions={[...regionarray, ...capitalarray.slice(0, 10)]}
-                    width="50px"
+                <Autocomplete
                   />
-                </Actions>
               </div>
               <div style={{ width: "67%" }}>
-                <Actions>
-                  <Autocomplete suggestions={list} isBorder={true} />
-                </Actions>
+               
+                  <UsAuto category={list}/>
               </div>
             </div>
             <Heading>{heading}</Heading>

@@ -9,19 +9,28 @@ import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import Divider from "@mui/material/Divider";
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemText from '@mui/material/ListItemText';
-import { Paper } from "@mui/material";
 import _ from "lodash";
 import MainHeader from "components/headers/main";
 import Footer from "components/footers/MiniCenteredFooter.js";
 import { Card } from 'primereact/card';
-
-const Container = tw.div`relative -mx-8 -mt-8 mr-8 xl:pl-10`;
+import { Paper } from "@mui/material";
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
+const Container = tw.div`relative`;
 const Content = tw.div`max-w-screen-xl mx-auto py-20 lg:py-24`;
+const TestimonialsContainer = tw.div`mt-16 lg:mt-0`;
+const Testimonials = styled.div``;
+const Testimonial = tw.div`max-w-md lg:max-w-none mx-auto lg:mx-0 flex flex-col items-center lg:items-stretch lg:flex-row`;
 
+const TestimonialImageSlider = tw(Slider)`w-full lg:w-5/12 flex-shrink-0 `;
+const TestimonialTextSlider = tw(Slider)``;
+const TestimonialText = tw.div`outline-none`;
+
+const ImageAndControlContainer = tw.div`relative outline-none`;
+const Image = styled.div((props) => [
+  `background-image: url("${props.imageSrc}");`,
+  tw`rounded bg-cover bg-center h-80 sm:h-96 lg:h-144`,
+]);
 
 const Row = tw.div`flex flex-col lg:flex-row -mb-10`;
 const Heading = tw(SectionHeading)`text-left lg:text-4xl xl:text-5xl`;
@@ -56,11 +65,11 @@ const AuthorProfile = tw.p`text-secondary-100 text-sm`;
 //     ${tw`h-20 w-20 flex-shrink-0`}
 //   }
 // `;
-const PostTextContainer = tw.div``
+const PostTextContainer = tw.div``;
 
-const TextContainer = styled.div(props => [
+const TextContainer = styled.div((props) => [
   tw`flex flex-col w-full lg:w-7/12`,
-  props.textOnLeft ? tw`lg:pr-12 lg:order-first` : tw`lg:pl-12 lg:order-last`
+  props.textOnLeft ? tw`lg:pr-12 lg:order-first` : tw`lg:pl-12 lg:order-last`,
 ]);
 
 const Subheading = tw(SubheadingBase)`mb-4`;
@@ -86,10 +95,13 @@ const CategoryPage = ({
 
   const [imageSliderRef, setImageSliderRef] = useState(null);
   const [textSliderRef, setTextSliderRef] = useState(null);
+  const [counter, setCounter] = useState(1);
+  const [visible, setvisible] = useState(false);
+  const incrementCounter = () => setCounter(counter + 1);
+  const decrementCounter = () =>{ counter!==0?setCounter(counter - 1):setvisible(false)};
 
   return (
     <Container>
-      {/* <MainHeader /> */}
       <Content>
         <Box>
           <Card title={data[0].categoryID[0].title} style={{ width: "100%" }} >
@@ -108,13 +120,79 @@ const CategoryPage = ({
                 <Paper title={i.title} style={{ marginLeft: "20px" }}>
                   <img alt="Card" style={{ padding: '20px' }} src={i.image} width="150px" height="200px" />
                   <p style={{ padding: "20px" }}>
-                    {i.title}
-                  </p>
-                </Paper>
-              );
-            })}
-          </div>
+                        {i.title}
+                      </p>
+                    </Paper>
+                );
+              })}
+              </div>
           <Divider />
+          <Paper style={{ width: "50%" }}>
+            <Typography
+              variant="h5"
+              gutterBottom
+              sx={{ fontWeight: "800", fontSize: "30px", m: "40px" }}
+            >
+              Salon Prime
+            </Typography>
+            <div style={{ display: "flex" }}>
+              <div>
+                <Typography
+                  variant="h5"
+                  gutterBottom
+                  sx={{
+                    fontWeight: "550",
+                    fontSize: "22px",
+                    marginLeft: "40px",
+                  }}
+                >
+                  Face Detop
+                </Typography>
+                <Typography
+                  variant="h5"
+                  gutterBottom
+                  sx={{
+                    fontSize: "15px",
+                    fontWeight: "550",
+                    marginLeft: "40px",
+                  }}
+                >
+                  $123 1 hr
+                </Typography>
+              </div>
+              <div
+                style={{ margin: "auto 0px auto auto", paddingRight: "20px" }}
+              >
+                {!visible &&(<>
+                 <div style={{display:"flex" ,border: "3px solid #000000",width:"150px"}}>
+                <Button style={{margin:"auto"}}  onClick={() => setvisible(true)}>
+                  Add
+                </Button>
+                </div></>)}
+                
+                {
+                  
+                visible && (<>
+                <div style={{display:"flex" ,border: "3px solid #000000", width:"150px"}}>
+                <Button onClick={decrementCounter} >-</Button>
+                <Typography style={{margin:"auto"}}>{counter}</Typography>
+                <Button onClick={incrementCounter}>+</Button>
+                </div>
+                </>)
+                }
+            
+              </div>
+            </div>
+            <Divider />
+            <div style={{ marginLeft: "40px" }}>
+              <ol>
+                <li>Coffee</li>
+                <li>Tea</li>
+                <li>Milk</li>
+              </ol>
+            </div>
+          </Paper>
+          <div></div>
         </Box>
       </Content>
       <section>
