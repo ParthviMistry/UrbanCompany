@@ -23,7 +23,7 @@ const getAllMainTitle = async (req, res) => {
   }
 };
 
-const getMAinTitleByID = async (req, res) => {
+const getMainTitleByID = async (req, res) => {
   try {
     const category = await MainTitle.findById(req.params.id);
     return res.status(200).send(category);
@@ -65,7 +65,7 @@ const deleteMainTitle = async (req, res) => {
 module.exports = {
   createMainTitle,
   getAllMainTitle,
-  getMAinTitleByID,
+  getMainTitleByID,
   updateMainTitle,
   deleteMainTitle,
 };

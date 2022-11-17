@@ -20,8 +20,10 @@ const CardImage = styled.div((props) => [
 const CategoryModal = ({ setDrawer, drawer }) => {
   const navigate = useNavigate();
 
-  const data = useSelector((state) => state?.category?.getDataByCategory);
-  
+  // const data = useSelector((state) => state?.category?.getDataByCategory);
+  const data = useSelector((state) => state?.mainTitle.getCategoriesByMainTitleID);
+  console.log("data ==", data);
+
   const toggleDrawer = (anchor, open) => (event) => {
     setDrawer(!drawer);
   };
@@ -39,7 +41,7 @@ const CategoryModal = ({ setDrawer, drawer }) => {
       onKeyDown={toggleDrawer(anchor, false)}
     >
       <ArrowBackIcon fontSize="bold" sx={{ m: "15px" }} />
-      {data.length > 0 && data.map((i) => i.categoryID[0].title)}
+      {data.length > 0 && data.map((i) => i.title)}
       <Divider />
       <List>
         {data.length > 0 && data.map((i) => (

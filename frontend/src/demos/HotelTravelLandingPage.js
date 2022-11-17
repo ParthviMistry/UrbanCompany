@@ -13,12 +13,12 @@ import SubscribeNewsLetterForm from "components/forms/SimpleSubscribeNewsletter.
 export default () => (
   <AnimationRevealPage>
     <Hero />
-    <Features />
     <SliderCard />
+    <Features />
     <TrendingCard />
     <MainFeature />
-    <Blog />
-    <Testimonial textOnLeft={true}/>
+    {/* <Blog /> */}
+    {/* <Testimonial textOnLeft={true} /> */}
     <FAQ />
     <SubscribeNewsLetterForm />
   </AnimationRevealPage>

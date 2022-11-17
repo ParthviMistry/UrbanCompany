@@ -23,7 +23,7 @@ const createCategory = async (req, res) => {
 const getAllCategory = async (req, res) => {
     try {
         const data = await Category.find();
-        
+
         return res.status(200).send(data);
     } catch (error) {
         return res.status(400).send(error.toString());
@@ -43,7 +43,7 @@ const getCategoryByID = async (req, res) => {
 
 const getCategoriesByMainTitleID = async (req, res) => {
     try {
-        const category = await Category.find({ mainTitleId: req.params.id });
+        const category = await Category.find({ mainTitleId: req.params.id }).populate("mainTitleId");
 
         return res.status(200).send(category);
     } catch (error) {

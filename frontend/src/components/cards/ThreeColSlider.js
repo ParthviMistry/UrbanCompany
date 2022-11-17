@@ -14,6 +14,7 @@ import {
   getAllCategory,
   getSubCategoriesByCategoryID,
 } from "store/categorySlice";
+import { getAllMainTitle, getCategoriesByMainTitleID } from "store/mainTitleSlice"
 
 import CategoryModal from "components/modal/categoryModal";
 
@@ -100,17 +101,18 @@ export default () => {
   const dispatch = useDispatch();
 
   const [drawer, setDrawer] = useState(false);
-  const data = useSelector((state) => state?.category?.getdata);
+  const data = useSelector((state) => state?.mainTitle.getdata);
+  console.log("data ==", data);
 
   useEffect(() => {
-    dispatch(getAllCategory());
+    dispatch(getAllMainTitle());
   }, []);
 
   const handleDrawer = (id) => {
     setDrawer(!drawer);
-    dispatch(getSubCategoriesByCategoryID(id));
+    dispatch(getCategoriesByMainTitleID(id));
   };
-  
+
   return (
     <Container>
       <Content>
@@ -135,6 +137,7 @@ export default () => {
           {data?.length &&
             data.map((card, index) => (
               <Card key={index} onClick={() => handleDrawer(card?._id)}>
+
                 <CardImage imageSrc={card.image} />
                 <TextInfo>
                   <TitleReviewContainer>
@@ -152,6 +155,6 @@ export default () => {
             ))}
         </CardSlider>
       </Content>
-    </Container>
+    </Container >
   );
 };
