@@ -11,6 +11,7 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import styled from "styled-components";
 import tw from "twin.macro";
+import _ from "lodash";
 
 const CardImage = styled.div((props) => [
   `background-image: url("${props.imageSrc}");`,
@@ -29,9 +30,10 @@ const CategoryModal = ({ setDrawer, drawer }) => {
   };
 
   const handleClick = () => {
-    console.log("click");
     navigate("/category")
   }
+
+  let arr = [];
 
   const list = (anchor) => (
     <Box
@@ -41,7 +43,7 @@ const CategoryModal = ({ setDrawer, drawer }) => {
       onKeyDown={toggleDrawer(anchor, false)}
     >
       <ArrowBackIcon fontSize="bold" sx={{ m: "15px" }} />
-      {data.length > 0 && data.map((i) => i.title)}
+      {data.length > 0 && data.map((i) => { arr.push(...i.mainTitleId); _.uniqBy(arr, '_id'); }) && arr[0].title}
       <Divider />
       <List>
         {data.length > 0 && data.map((i) => (

@@ -102,7 +102,6 @@ export default () => {
 
   const [drawer, setDrawer] = useState(false);
   const data = useSelector((state) => state?.mainTitle.getdata);
-  console.log("data ==", data);
 
   useEffect(() => {
     dispatch(getAllMainTitle());

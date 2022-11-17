@@ -8,7 +8,7 @@ export const getAllMainTitle = createAsyncThunk(
             const response = await axios.get(
                 "http://localhost:5000/api/getAllMainTitle"
             );
-            console.log("res==", response);
+
             return response.data;
         } catch (e) {
             return getState.rejectWithValue(e.response.data);
@@ -23,7 +23,7 @@ export const getCategoriesByMainTitleID = createAsyncThunk(
             const response = await axios.get(
                 `http://localhost:5000/api/getCategoriesByMainTitleID/${id}`
             );
-            console.log("res by id==", response);
+
             return response.data;
         } catch (e) {
             return getState.rejectWithValue(e.response.data);
