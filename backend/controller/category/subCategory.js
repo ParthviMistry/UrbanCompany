@@ -33,7 +33,7 @@ const getSubCategoryByID = async (req, res) => {
     try {
         const category = await SubCategory.findById(req.params.id);
 
-        return res.status(200).send(data);
+        return res.status(200).send(category);
     } catch (error) {
         return res.status(400).send(error.toString());
     }

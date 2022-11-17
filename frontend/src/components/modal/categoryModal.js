@@ -12,6 +12,7 @@ import ListItemText from '@mui/material/ListItemText';
 import styled from "styled-components";
 import tw from "twin.macro";
 import _ from "lodash";
+import CategoryPage from "pages/CategoryPage";
 
 const CardImage = styled.div((props) => [
   `background-image: url("${props.imageSrc}");`,
@@ -23,14 +24,14 @@ const CategoryModal = ({ setDrawer, drawer }) => {
 
   // const data = useSelector((state) => state?.category?.getDataByCategory);
   const data = useSelector((state) => state?.mainTitle.getCategoriesByMainTitleID);
-  console.log("data ==", data);
 
   const toggleDrawer = (anchor, open) => (event) => {
     setDrawer(!drawer);
   };
 
-  const handleClick = () => {
-    navigate("/category")
+  const handleClick = (id) => {
+    <CategoryPage/>
+    navigate(`/category/${id}`)
   }
 
   let arr = [];
@@ -48,7 +49,7 @@ const CategoryModal = ({ setDrawer, drawer }) => {
       <List>
         {data.length > 0 && data.map((i) => (
           <ListItem>
-            <ListItemButton onClick={() => handleClick()}>
+            <ListItemButton onClick={() => handleClick(i._id)}>
               <CardImage imageSrc={i.image} />
               <ListItemText fontSize="bold" primary={i.title} style={{ paddingLeft: "20px" }} />
             </ListItemButton>

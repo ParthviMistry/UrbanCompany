@@ -32,7 +32,7 @@ export default function App() {
             <Route path="/" element={<HotelTravelLandingPage />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<SignUp />} />
-            <Route path="/category/" element={<CategoryPage />} />
+            <Route path="/category/:id" element={<CategoryPage />} />
           </Routes>
         </Router>
         <MiniCenteredFooter />
