@@ -18,7 +18,7 @@ const uri = process.env.DB_URI;
 const port = process.env.PORT || 5000;
 
 app.get("/", (req, res) => {
-  res.send("Welcome our to Urban Company..");
+  res.send("Welcome our to Home Service..");
 });
 
 app.listen(port, () => {
@@ -28,7 +28,7 @@ app.listen(port, () => {
 mongoose
   .connect(uri, {
     useNewUrlParser: true,
-    useUnifiedTopology: true,
+    useUnifiedTopology: true
   })
   .then(() => console.log("MongoDB connection established..."))
   .catch((error) => console.error("MongoDB connection failed:", error.message));

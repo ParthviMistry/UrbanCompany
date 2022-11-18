@@ -3,7 +3,7 @@ import AnimationRevealPage from "helpers/AnimationRevealPage.js";
 import { Container as ContainerBase } from "components/misc/Layouts";
 import tw from "twin.macro";
 import styled from "styled-components";
-import {css} from "styled-components/macro"; //eslint-disable-line
+import { css } from "styled-components/macro"; //eslint-disable-line
 import illustration from "images/login-illustration.svg";
 import logo from "images/U.jpg";
 import googleIconImageSrc from "images/google-icon.png";
@@ -13,7 +13,9 @@ import { loginAPI } from "store/authSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 
-const Container = tw(ContainerBase)`min-h-screen bg-primary-900 text-white font-medium flex justify-center -m-8`;
+const Container = tw(
+  ContainerBase
+)`min-h-screen bg-primary-900 text-white font-medium flex justify-center -m-8`;
 const Content = tw.div`max-w-screen-xl m-0 sm:mx-20 sm:my-16 bg-white text-gray-900 shadow sm:rounded-lg flex justify-center flex-1`;
 const MainContainer = tw.div`lg:w-1/2 xl:w-5/12 p-6 sm:p-12`;
 const LogoLink = tw.a``;
@@ -35,29 +37,26 @@ const SubmitButton = styled.button`
 `;
 const IllustrationContainer = tw.div`sm:rounded-r-lg flex-1 bg-purple-100 text-center hidden lg:flex justify-center`;
 const IllustrationImage = styled.div`
-  ${props => `background-image: url("${props.imageSrc}");`}
+  ${(props) => `background-image: url("${props.imageSrc}");`}
   ${tw`m-12 xl:m-16 w-full max-w-sm bg-contain bg-center bg-no-repeat`}
 `;
 
-const Login = (
-  {
-    logoLinkUrl = "/",
-    illustrationImageSrc = illustration,
-    headingText = "Sign In Urban Company",
-    socialButtons = [
-      {
-        iconImageSrc: googleIconImageSrc,
-        text: "Sign In With Google",
-        url: "https://google.com"
-      }
-    ],
-    submitButtonText = "Sign In",
-    SubmitButtonIcon = LoginIcon,
-    forgotPasswordUrl = "",
-    signupUrl = "/signup",
-  
-  }
-) => {
+const Login = ({
+  logoLinkUrl = "/",
+  illustrationImageSrc = illustration,
+  headingText = "Sign In Home Service",
+  socialButtons = [
+    {
+      iconImageSrc: googleIconImageSrc,
+      text: "Sign In With Google",
+      url: "https://google.com"
+    }
+  ],
+  submitButtonText = "Sign In",
+  SubmitButtonIcon = LoginIcon,
+  forgotPasswordUrl = "",
+  signupUrl = "/signup"
+}) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -66,16 +65,19 @@ const Login = (
   const handleSubmit = (e) => {
     e.preventDefault();
     if (data.email && data.password) {
-      if (data) {dispatch(loginAPI(data));navigate("/")};
+      if (data) {
+        dispatch(loginAPI(data));
+        navigate("/");
+      }
     }
   };
 
   const handleInput = (key, value) => {
-      setData({
-        ...data,
-        [key]: value,
-      });
-    };
+    setData({
+      ...data,
+      [key]: value
+    });
+  };
 
   return (
     <AnimationRevealPage>
@@ -137,6 +139,6 @@ const Login = (
       </Container>
     </AnimationRevealPage>
   );
-} 
+};
 
 export default Login;

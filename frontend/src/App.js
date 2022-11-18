@@ -1,5 +1,5 @@
 import React from "react";
-import GlobalStyles from 'styles/GlobalStyles';
+import GlobalStyles from "styles/GlobalStyles";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { Provider } from "react-redux";
 import store from "../src/store/store";
@@ -12,9 +12,9 @@ import CategoryPage from "pages/CategoryPage";
 import MainHeader from "components/headers/main";
 import MiniCenteredFooter from "components/footers/MiniCenteredFooter";
 
-import 'primereact/resources/themes/lara-light-indigo/theme.css';
-import 'primereact/resources/primereact.min.css';
-import 'primeicons/primeicons.css';
+import "primereact/resources/themes/lara-light-indigo/theme.css";
+import "primereact/resources/primereact.min.css";
+import "primeicons/primeicons.css";
 
 const Container = tw.div`relative -mx-8 -mt-8 mr-8 xl:pl-10 pt-12`;
 
@@ -40,4 +40,3 @@ export default function App() {
     </>
   );
 }
-

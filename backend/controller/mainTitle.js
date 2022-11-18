@@ -1,13 +1,15 @@
 const MainTitle = require("../models/MainTitle");
+const cloudinary = require("../utils/cloudnary");
 
 const createMainTitle = async (req, res) => {
   try {
     const postMainTitle = new MainTitle(req.body);
     await postMainTitle.save();
 
-    return res
-      .status(200)
-      .send({ message: "MainTitle Created successfully!!", postMainTitle });
+    return res.status(200).send({
+      message: "MainTitle Created successfully!!",
+      postMainTitle
+    });
   } catch (error) {
     return res.status(400).send(error.toString());
   }
@@ -33,11 +35,13 @@ const getMainTitleByID = async (req, res) => {
 };
 
 const updateMainTitle = async (req, res) => {
+  const image = await cloudinary.uploader.upload(req.file.path);
+
   try {
     const updatedCategory = await MainTitle.findByIdAndUpdate(
       req.params.id,
       {
-        $set: req.body,
+        $set: { ...req.body, image: image.url }
       },
       { new: true }
     );
@@ -67,5 +71,5 @@ module.exports = {
   getAllMainTitle,
   getMainTitleByID,
   updateMainTitle,
-  deleteMainTitle,
+  deleteMainTitle
 };

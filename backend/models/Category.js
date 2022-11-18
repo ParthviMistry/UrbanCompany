@@ -5,17 +5,18 @@ const categorySchema = mongoose.Schema(
     title: { type: String, trim: true }, // painting, cleaning
     description: { type: String },
     image: { type: String },
-    mainTitleId: [ // HomeServies id
+    mainTitleId: [
+      // HomeServies id
       {
         type: mongoose.Types.ObjectId,
         ref: "MainTitle",
         trim: true,
-        index: true,
-      },
-    ],
+        index: true
+      }
+    ]
   },
   {
-    timestamps: true,
+    timestamps: true
   }
 );
 

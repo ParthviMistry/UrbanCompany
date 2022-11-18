@@ -15,20 +15,20 @@ const userSchema = mongoose.Schema(
         if (!validator.isEmail(value)) {
           throw new Error("Email Id is Not Valid");
         }
-      },
+      }
     },
     password: {
       type: String,
       required: true,
-      trim: true,
+      trim: true
     },
     isAdmin: {
       type: Boolean,
-      default: false,
-    },
+      default: false
+    }
   },
   {
-    timestamps: true,
+    timestamps: true
   }
 );
 

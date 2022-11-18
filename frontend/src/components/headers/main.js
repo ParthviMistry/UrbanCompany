@@ -5,7 +5,7 @@ import styled from "styled-components";
 import Header, {
   LogoLink,
   NavLinks,
-  NavLink as NavLinkBase,
+  NavLink as NavLinkBase
 } from "../headers/light.js";
 
 const StyledHeader = styled(Header)`
@@ -27,7 +27,6 @@ const handleLogout = () => {
   // const navigate = useNavigate();
   localStorage.clear();
   // navigate("/home");
-  console.log("logout");
 };
 
 const MainHeader = () => {
@@ -51,7 +50,7 @@ const MainHeader = () => {
           Login
         </NavLink>
       )}
-    </NavLinks>,
+    </NavLinks>
   ];
 
   return (
