@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const MainTitleSchema = mongoose.Schema(
   {
     title: { type: String, trim: true }, // Home Services // Application
+    image: { type: String },
   },
   {
     timestamps: true,
@@ -11,4 +12,4 @@ const MainTitleSchema = mongoose.Schema(
 
 const MainTitle = mongoose.model("MainTitle", MainTitleSchema);
 
-module.exports =MainTitle;
+module.exports = MainTitle;

@@ -14,7 +14,7 @@ import {
   getAllCategory,
   getSubCategoriesByCategoryID,
 } from "store/categorySlice";
-
+import TestCard from "./testCard";
 import CategoryModal from "components/modal/categoryModal";
 
 const Container = tw.div`relative`;
@@ -101,6 +101,7 @@ export default () => {
 
   const [drawer, setDrawer] = useState(false);
   const data = useSelector((state) => state?.category?.getdata);
+  const mainTable = useSelector((state) => state?.mainTable?.getdata);
 
   useEffect(() => {
     dispatch(getAllCategory());
@@ -110,47 +111,50 @@ export default () => {
     setDrawer(!drawer);
     dispatch(getSubCategoriesByCategoryID(id));
   };
-  
+
   return (
     <Container>
       <Content>
-        {drawer && (
-          <CategoryModal
-            setDrawer={setDrawer}
-            drawer={drawer}
-          />
-        )}
-        <HeadingWithControl>
-          <Heading>Popular Services</Heading>
-          <Controls>
-            <PrevButton onClick={sliderRef?.slickPrev}>
-              <ChevronLeftIcon />
-            </PrevButton>
-            <NextButton onClick={sliderRef?.slickNext}>
-              <ChevronRightIcon />
-            </NextButton>
-          </Controls>
-        </HeadingWithControl>
-        <CardSlider ref={setSliderRef} {...sliderSettings}>
-          {data?.length &&
-            data.map((card, index) => (
-              <Card key={index} onClick={() => handleDrawer(card?._id)}>
-                <CardImage imageSrc={card.image} />
-                <TextInfo>
-                  <TitleReviewContainer>
-                    <Title>{card.title}</Title>
-                    <RatingsInfo>
-                      <StarIcon />
-                      <Rating>{card.rating}</Rating>
-                    </RatingsInfo>
-                  </TitleReviewContainer>
-                  <Description>{card.description}</Description>
-                  <Description style={{ fontWeight: "bold" }}>View more...</Description>
-                </TextInfo>
-                {/* <PrimaryButton>View more</PrimaryButton> */}
-              </Card>
-            ))}
-        </CardSlider>
+        {drawer && <CategoryModal setDrawer={setDrawer} drawer={drawer} />}
+        {mainTable.length > 0 &&
+          mainTable.map((i) => {
+            return (
+              <>
+                <HeadingWithControl>
+                  <Heading>{i.title}</Heading>
+                  <Controls>
+                    <PrevButton onClick={sliderRef?.slickPrev}>
+                      <ChevronLeftIcon />
+                    </PrevButton>
+                    <NextButton onClick={sliderRef?.slickNext}>
+                      <ChevronRightIcon />
+                    </NextButton>
+                  </Controls>
+                </HeadingWithControl>
+                {/* <CardSlider ref={setSliderRef} {...sliderSettings}> */}
+                <TestCard category={i.category} handleDrawer={handleDrawer} />
+                {/* {i.category.map((j) => {
+                    return (
+                      <Card onClick={() => handleDrawer(j?._id)}>
+                        <TextInfo>
+                          <TitleReviewContainer>
+                            <Title>{j.title}</Title>
+                            <RatingsInfo>
+                              <StarIcon />
+                            </RatingsInfo>
+                          </TitleReviewContainer>
+                          <Description>{j.description}</Description>
+                          <Description style={{ fontWeight: "bold" }}>
+                            View more...
+                          </Description>
+                        </TextInfo>
+                      </Card>
+                    );
+                  })} */}
+                {/* </CardSlider> */}
+              </>
+            );
+          })}
       </Content>
     </Container>
   );
