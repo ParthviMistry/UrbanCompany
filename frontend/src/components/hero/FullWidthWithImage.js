@@ -3,10 +3,14 @@ import tw from "twin.macro";
 import styled from "styled-components";
 import imgs from "../../images/2.jpg";
 import { useSelector, useDispatch } from "react-redux";
-import { getAllCategory } from "store/categorySlice";
+import {
+  getAllCategory,
+  getSubCategoriesByCategoryID
+} from "store/categorySlice";
 import { getsearch } from "store/searchSlice";
 import Autocomplete from "../../helpers/useAutoComplete";
 import CategorySearch from "../../helpers/categorySearch";
+
 import _ from "lodash";
 
 const Container = tw.div`relative -mx-8 -mt-8`;
@@ -60,6 +64,16 @@ const FullWidthWithImage = ({
   const [uniqData, setUniqData] = useState([]);
 
   const dataCategory = useSelector((state) => state?.category?.getdata);
+  const fillterdata = useSelector(
+    (state) => state?.category?.selectedCatgory?.data
+  );
+
+  useEffect(() => {
+    fillterdata &&
+      fillterdata.map((item) =>
+        dispatch(getSubCategoriesByCategoryID(item?._id))
+      );
+  }, [fillterdata]);
   let arr = [];
 
   useEffect(() => {
@@ -82,6 +96,12 @@ const FullWidthWithImage = ({
   //   });
 
   const categoryFilter =
+    dataCategory.length > 0 &&
+    dataCategory.map((item) => {
+      return { label: item.title, data: [item] };
+    });
+
+  const categoryFilter1 =
     uniqData.length > 0 &&
     uniqData.map((item) => {
       return { label: item.title, data: [item] };

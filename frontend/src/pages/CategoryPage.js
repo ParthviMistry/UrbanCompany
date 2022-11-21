@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
 import tw from "twin.macro";
@@ -12,6 +12,8 @@ import { Card } from "primereact/card";
 import { Paper } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
+import { getSubCategoriesByCategoryID } from "store/categorySlice";
+
 import _ from "lodash";
 
 const Container = tw.div`relative`;
@@ -36,18 +38,21 @@ const CategoryPage = ({ textOnLeft = false }) => {
     <Container>
       <Content>
         <Box>
-          <Card title={data[0].categoryID[0].title} style={{ width: "100%" }}>
+          <Card
+            title={data[0]?.categoryID?.[0].title}
+            style={{ width: "100%" }}
+          >
             <div
               style={{ marginBottom: "2em", display: "flex", padding: "20px" }}
             >
               <img
                 alt="Card"
-                src={data[0].categoryID[0].image}
+                src={data[0]?.categoryID?.[0].image}
                 width="300px"
                 height="300px"
               />
               <p style={{ marginLeft: "20px" }}>
-                {data[0].categoryID[0].description}
+                {data[0]?.categoryID?.[0].description}
               </p>
             </div>
           </Card>

@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import tw from "twin.macro";
 
 import { getAllCategory } from "store/categorySlice";
+import { useNavigate } from "react-router-dom";
 
 import CardSlider1 from "./CardSlider1";
 import _ from "lodash";
@@ -21,6 +22,7 @@ export default () => {
   const fillterdata = useSelector(
     (state) => state?.category?.selectedCatgory?.data
   );
+  const navigate = useNavigate();
 
   let maintitleidarr = [];
 
@@ -34,11 +36,13 @@ export default () => {
         return maintitleidarr.push(...data?.mainTitleId);
       });
 
-    settitle(fillterdata);
-
+    // settitle(fillterdata);
     !fillterdata && settitle(_.uniqBy(maintitleidarr, "title"));
-  }, [data, fillterdata]);
+  }, [data]);
 
+  useEffect(() => {
+    fillterdata && navigate("/category");
+  }, [fillterdata]);
   return (
     <Container>
       <Content>

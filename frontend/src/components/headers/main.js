@@ -5,7 +5,7 @@ import styled from "styled-components";
 import Header, {
   LogoLink,
   NavLinks,
-  NavLink as NavLinkBase,
+  NavLink as NavLinkBase
 } from "../headers/light.js";
 
 const StyledHeader = styled(Header)`
@@ -35,8 +35,8 @@ const MainHeader = () => {
 
   const navLinks = [
     <NavLinks key={1}>
-      <NavLink href="#">Home</NavLink>
-      <NavLink href="#">Blog</NavLink>
+      <NavLink href="/">Home</NavLink>
+      {/* <NavLink href="#">Blog</NavLink> */}
       {token ? (
         <NavLink
           type="button"
@@ -51,7 +51,7 @@ const MainHeader = () => {
           Login
         </NavLink>
       )}
-    </NavLinks>,
+    </NavLinks>
   ];
 
   return (
