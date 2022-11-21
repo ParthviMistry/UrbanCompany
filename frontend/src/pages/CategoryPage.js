@@ -1,16 +1,19 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import Slider from "react-slick";
 import styled from "styled-components";
 import tw from "twin.macro";
-import { SectionHeading, Subheading as SubheadingBase } from "../components/misc/Headings";
+import {
+  SectionHeading,
+  Subheading as SubheadingBase
+} from "../components/misc/Headings";
 import Box from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
-import _ from "lodash";
-import { Card } from 'primereact/card';
+import { Card } from "primereact/card";
 import { Paper } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
+import _ from "lodash";
+
 const Container = tw.div`relative`;
 const Content = tw.div`max-w-screen-xl mx-auto py-10 lg:py-10`;
 const Description = tw.p`mt-2 font-medium text-secondary-100 leading-loose text-sm`;
@@ -18,58 +21,55 @@ const Description = tw.p`mt-2 font-medium text-secondary-100 leading-loose text-
 const Subheading = tw(SubheadingBase)`mb-4`;
 const HeadingTitle = tw(SectionHeading)`lg:text-left leading-tight`;
 
-const Actions = styled.div`
-  ${tw`relative max-w-md text-center mx-auto lg:mx-0`}
-  .action {
-    ${tw`text-center inline-block w-full sm:w-48 py-4 font-semibold tracking-wide rounded hocus:outline-none focus:shadow-outline transition duration-300`}
-  }
-  .primaryAction {
-    ${tw`bg-primary-500 text-gray-100 hover:bg-primary-700 ml-5 mb-5`}
-  }
-  .secondaryAction {
-    ${tw`mt-4 sm:mt-0 sm:ml-4 bg-gray-300 text-gray-700 hover:bg-gray-400 hover:text-gray-800`}
-  }
-  input {
-    ${tw`sm:pr-48 pl-8 py-4 sm:py-5 rounded-full border-2 w-full font-medium focus:outline-none transition duration-300  focus:border-primary-500 hover:border-gray-500 `}
-  }
-  button {
-    ${tw`w-1 sm:absolute right-0 top-0 bottom-0 bg-primary-500 text-gray-100 font-bold mr-2 my-4 sm:my-2 rounded-full py-4 flex items-center justify-center sm:w-40 sm:leading-none focus:outline-none hover:bg-primary-900 transition duration-300`}
-  }
-`;
-
-const CategoryPage = ({
-  textOnLeft = false
-}) => {
-  const data = useSelector((state) => state?.category?.getDataByCategory);
+const CategoryPage = ({ textOnLeft = false }) => {
+  const data = useSelector((state) => state?.category?.getDataBySubCategory);
 
   const [counter, setCounter] = useState(1);
   const [visible, setvisible] = useState(false);
 
   const incrementCounter = () => setCounter(counter + 1);
-  const decrementCounter = () => { counter !== 0 ? setCounter(counter - 1) : setvisible(false) };
+  const decrementCounter = () => {
+    counter !== 0 ? setCounter(counter - 1) : setvisible(false);
+  };
 
   return (
     <Container>
       <Content>
         <Box>
-          <Card title={data[0].categoryID[0].title} style={{ width: "100%" }} >
-            <div style={{ marginBottom: '2em', display: 'flex', padding: "20px" }}>
-              <img alt="Card" src={data[0].categoryID[0].image} width="300px" height="300px" />
-              <p style={{ marginLeft: '20px' }}>
+          <Card title={data[0].categoryID[0].title} style={{ width: "100%" }}>
+            <div
+              style={{ marginBottom: "2em", display: "flex", padding: "20px" }}
+            >
+              <img
+                alt="Card"
+                src={data[0].categoryID[0].image}
+                width="300px"
+                height="300px"
+              />
+              <p style={{ marginLeft: "20px" }}>
                 {data[0].categoryID[0].description}
               </p>
             </div>
           </Card>
           <Divider />
           <HeadingInfo tw="hidden lg:block" subheading="SubCategory" />
-          <div style={{ marginBottom: '2em', display: 'flex', padding: "20px" }}>
+          <div
+            style={{ marginBottom: "2em", display: "flex", padding: "20px" }}
+          >
             {data.map((i) => {
               return (
                 <Paper title={i.title} style={{ marginLeft: "20px" }}>
-                  <img alt="Card" src={i.image} style={{ padding: '20px', width: "150px", height: "120px", backgroundSize: "cover" }} />
-                  <p style={{ padding: "20px" }}>
-                    {i.title}
-                  </p>
+                  <img
+                    alt="Card"
+                    src={i.image}
+                    style={{
+                      padding: "20px",
+                      width: "150px",
+                      height: "120px",
+                      backgroundSize: "cover"
+                    }}
+                  />
+                  <p style={{ padding: "20px" }}>{i.title}</p>
                 </Paper>
               );
             })}
@@ -79,38 +79,60 @@ const CategoryPage = ({
             return (
               <>
                 <Paper>
-                  <div style={{ display: "flex", margin: "20px 40px 5px", justifyContent: "space-between" }}>
+                  <div
+                    style={{
+                      display: "flex",
+                      margin: "20px 40px 5px",
+                      justifyContent: "space-between"
+                    }}
+                  >
                     <Typography
                       variant="h5"
-                      sx={{ fontWeight: "800", fontSize: "30px", margin: "20px" }}
+                      sx={{
+                        fontWeight: "800",
+                        fontSize: "30px",
+                        margin: "20px"
+                      }}
                     >
-                      <p>
-                        {i.title}
-                      </p>
-                      <p style={{ fontSize: "16px" }}>
-                        $ {i.price}
-                      </p>
+                      <p>{i.title}</p>
+                      <p style={{ fontSize: "16px" }}>$ {i.price}</p>
                     </Typography>
-                    <div
-                      style={{ margin: "20px", paddingRight: "20px" }}
-                    >
-                      {!visible && (<>
-                        <div style={{ border: "3px solid #000000", width: "150px", height: "50px", textAlign: "center", padding: "10px" }} onClick={() => setvisible(true)}>
-                          Add
-                        </div>
-                      </>)}
+                    <div style={{ margin: "20px", paddingRight: "20px" }}>
+                      {!visible && (
+                        <>
+                          <div
+                            style={{
+                              border: "3px solid #000000",
+                              width: "150px",
+                              height: "50px",
+                              textAlign: "center",
+                              padding: "10px"
+                            }}
+                            onClick={() => setvisible(true)}
+                          >
+                            Add
+                          </div>
+                        </>
+                      )}
 
-                      {
-
-                        visible && (<>
-                          <div style={{ border: "3px solid #000000", width: "150px", height: "50px", display: "flex" }}>
-                            <Button onClick={decrementCounter} >-</Button>
-                            <Typography style={{ margin: "auto" }}>{counter}</Typography>
+                      {visible && (
+                        <>
+                          <div
+                            style={{
+                              border: "3px solid #000000",
+                              width: "150px",
+                              height: "50px",
+                              display: "flex"
+                            }}
+                          >
+                            <Button onClick={decrementCounter}>-</Button>
+                            <Typography style={{ margin: "auto" }}>
+                              {counter}
+                            </Typography>
                             <Button onClick={incrementCounter}>+</Button>
                           </div>
-                        </>)
-                      }
-
+                        </>
+                      )}
                     </div>
                   </div>
                   <Divider />
@@ -119,13 +141,13 @@ const CategoryPage = ({
                   </div>
                 </Paper>
               </>
-            )
+            );
           })}
         </Box>
       </Content>
-    </Container >
+    </Container>
   );
-}
+};
 export default CategoryPage;
 
 const HeadingInfo = ({ subheading, heading, description, ...props }) => (

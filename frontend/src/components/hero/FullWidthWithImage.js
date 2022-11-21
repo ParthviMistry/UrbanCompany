@@ -1,4 +1,3 @@
-import { useLocation, useNavigate } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import tw from "twin.macro";
 import styled from "styled-components";
@@ -16,7 +15,7 @@ const LeftColumn = tw.div`ml-8 mr-8 xl:pl-10`;
 
 const RightColumn = styled.div((props) => [
   `background-image: url("${props.imageSrc}");`,
-  tw`bg-green-500 bg-cover bg-center xl:ml-24 h-96 lg:h-auto lg:w-1/2 lg:flex-1`,
+  tw`bg-green-500 bg-cover bg-center xl:ml-24 h-96 lg:h-auto lg:w-1/2 lg:flex-1`
 ]);
 
 const Content = tw.div`mt-12 lg:mt-12 lg:mb-24 flex flex-col sm:items-center lg:items-stretch`;
@@ -54,18 +53,39 @@ const FullWidthWithImage = ({
   primaryActionUrl = "/signup",
   primaryActionText = "Sign Up",
   secondaryActionUrl = "/login",
-  secondaryActionText = "Login",
+  secondaryActionText = "Login"
 }) => {
   const dispatch = useDispatch();
 
+  const [uniqData, setUniqData] = useState([]);
+
   const dataCategory = useSelector((state) => state?.category?.getdata);
+  let arr = [];
 
   useEffect(() => {
     dispatch(getsearch());
     dispatch(getAllCategory());
   }, []);
 
-  const categoryFilter = dataCategory.length > 0 && dataCategory.map((item) => { return { label: item.title } });
+  useEffect(() => {
+    dataCategory?.length &&
+      dataCategory.map((data) => {
+        return arr.push(...data?.mainTitleId);
+      });
+    setUniqData(_.uniqBy(arr, "title"));
+  }, [dataCategory]);
+
+  // const categoryFilter =
+  //   dataCategory.length > 0 &&
+  //   dataCategory.map((item) => {
+  //     return { label: item.title };
+  //   });
+
+  const categoryFilter =
+    uniqData.length > 0 &&
+    uniqData.map((item) => {
+      return { label: item.title, data: [item] };
+    });
 
   return (
     <Container>
@@ -76,7 +96,7 @@ const FullWidthWithImage = ({
               style={{
                 display: "flex",
                 marginBottom: "7%",
-                justifyContent: "space-around",
+                justifyContent: "space-around"
               }}
             >
               <div style={{ width: "30%" }}>
