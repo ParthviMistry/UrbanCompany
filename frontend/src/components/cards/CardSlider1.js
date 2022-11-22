@@ -1,18 +1,17 @@
 import React, { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import Slider from "react-slick";
 import tw from "twin.macro";
 import styled from "styled-components";
-import { SectionHeading } from "components/misc/Headings";
 import { PrimaryButton as PrimaryButtonBase } from "components/misc/Buttons";
 import { ReactComponent as StarIcon } from "feather-icons/dist/icons/star.svg";
 import { ReactComponent as ChevronLeftIcon } from "feather-icons/dist/icons/chevron-left.svg";
 import { ReactComponent as ChevronRightIcon } from "feather-icons/dist/icons/chevron-right.svg";
-import { useSelector, useDispatch } from "react-redux";
-import { Typography } from "@mui/material";
-import _ from "lodash";
-
+import { SectionHeading } from "components/misc/Headings";
 import CategoryModal from "components/modal/categoryModal";
 import { getSubCategoriesByCategoryID } from "store/categorySlice";
+import _ from "lodash";
 
 let title = [];
 
@@ -58,6 +57,8 @@ const Description = tw.p`text-sm leading-loose mt-2 sm:mt-4`;
 
 export default (props) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const [drawer, setDrawer] = useState(false);
   const [sliderRef, setSliderRef] = useState(null);
 
@@ -84,12 +85,13 @@ export default (props) => {
   const handleDrawer = (id) => {
     dispatch(getSubCategoriesByCategoryID(id));
     setDrawer(!drawer);
+    navigate(`/category/${id}`);
     return id;
   };
 
   return (
     <>
-      {drawer && <CategoryModal setDrawer={setDrawer} drawer={drawer} />}
+      {/* {drawer && <CategoryModal setDrawer={setDrawer} drawer={drawer} />} */}
       <HeadingWithControl>
         <Heading>{props.card?.title}</Heading>
         <Controls>
