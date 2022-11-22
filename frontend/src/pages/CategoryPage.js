@@ -50,7 +50,6 @@ const CategoryPage = () => {
     } else {
       dispatch(cart(true));
     }
-    console.log("visi...", visibleArr);
   }, [visibleArr]);
 
   return (
@@ -126,7 +125,7 @@ const CategoryPage = () => {
                   <div style={{ padding: "20px 60px" }}>
                     <p>{i.description}</p>
                   </div>
-                  <AddToCart setArray={setArray} id={idx} />
+                  <AddToCart setArray={setArray} id={i} />
                 </Paper>
               </>
             );

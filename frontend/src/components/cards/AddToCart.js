@@ -36,7 +36,7 @@ function AddToCart(props) {
                   let index = prevArray.findIndex((obj) => obj.id === props.id);
                   let newArray = [...prevArray];
                   newArray[index] = {
-                    id: index,
+                    id: props.id,
                     visible: true
                   };
                   return newArray;
@@ -68,7 +68,7 @@ function AddToCart(props) {
                       );
                       let newArray = [...prevArray];
                       newArray[index] = {
-                        id: index,
+                        id: props.id,
                         visible: false
                       };
                       return newArray;
