@@ -12,8 +12,8 @@ import { Card } from "primereact/card";
 import { Paper } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
-import { getSubCategoriesByCategoryID } from "store/categorySlice";
-
+import { cart } from "store/categorySlice";
+import AddToCart from "../components/cards/AddToCart";
 import _ from "lodash";
 
 const Container = tw.div`relative`;
@@ -23,16 +23,35 @@ const Description = tw.p`mt-2 font-medium text-secondary-100 leading-loose text-
 const Subheading = tw(SubheadingBase)`mb-4`;
 const HeadingTitle = tw(SectionHeading)`lg:text-left leading-tight`;
 
-const CategoryPage = ({ textOnLeft = false }) => {
+const CategoryPage = () => {
+  const dispatch = useDispatch();
+
   const data = useSelector((state) => state?.category?.getDataBySubCategory);
+  const visible = useSelector((state) => state?.category?.cart);
 
-  const [counter, setCounter] = useState(1);
-  const [visible, setvisible] = useState(false);
+  const [visibleArr, setArray] = useState([]);
 
-  const incrementCounter = () => setCounter(counter + 1);
-  const decrementCounter = () => {
-    counter !== 0 ? setCounter(counter - 1) : setvisible(false);
-  };
+  useEffect(() => {
+    data.forEach((idx) => {
+      setArray((prevArray) => {
+        let newArray = prevArray;
+        newArray.push({
+          id: idx,
+          visible: false
+        });
+        return newArray;
+      });
+    });
+  }, [data]);
+
+  useEffect(() => {
+    if (visibleArr && visibleArr.every((obj) => obj.visible == false)) {
+      dispatch(cart(false));
+    } else {
+      dispatch(cart(true));
+    }
+    console.log("visi...", visibleArr);
+  }, [visibleArr]);
 
   return (
     <Container>
@@ -80,7 +99,7 @@ const CategoryPage = ({ textOnLeft = false }) => {
             })}
           </div>
           <Divider />
-          {data.map((i) => {
+          {data.map((i, idx) => {
             return (
               <>
                 <Paper>
@@ -102,52 +121,27 @@ const CategoryPage = ({ textOnLeft = false }) => {
                       <p>{i.title}</p>
                       <p style={{ fontSize: "16px" }}>$ {i.price}</p>
                     </Typography>
-                    <div style={{ margin: "20px", paddingRight: "20px" }}>
-                      {!visible && (
-                        <>
-                          <div
-                            style={{
-                              border: "3px solid #000000",
-                              width: "150px",
-                              height: "50px",
-                              textAlign: "center",
-                              padding: "10px"
-                            }}
-                            onClick={() => setvisible(true)}
-                          >
-                            Add
-                          </div>
-                        </>
-                      )}
-
-                      {visible && (
-                        <>
-                          <div
-                            style={{
-                              border: "3px solid #000000",
-                              width: "150px",
-                              height: "50px",
-                              display: "flex"
-                            }}
-                          >
-                            <Button onClick={decrementCounter}>-</Button>
-                            <Typography style={{ margin: "auto" }}>
-                              {counter}
-                            </Typography>
-                            <Button onClick={incrementCounter}>+</Button>
-                          </div>
-                        </>
-                      )}
-                    </div>
                   </div>
                   <Divider />
                   <div style={{ padding: "20px 60px" }}>
                     <p>{i.description}</p>
                   </div>
+                  <AddToCart setArray={setArray} id={idx} />
                 </Paper>
               </>
             );
           })}
+          {visible && (
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "end",
+                margin: "10px"
+              }}
+            >
+              <Button variant="contained">View Cart</Button>
+            </div>
+          )}
         </Box>
       </Content>
     </Container>

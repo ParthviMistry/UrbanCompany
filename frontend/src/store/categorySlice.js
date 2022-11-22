@@ -51,6 +51,7 @@ const categorySlice = createSlice({
     getDataByCategory: [],
     getDataBySubCategory: [],
     selectedCatgory: undefined,
+    cart: false,
     error: ""
   },
   reducers: {
@@ -59,6 +60,9 @@ const categorySlice = createSlice({
     },
     selectCategory: (state, action) => {
       state.selectedCatgory = action.payload;
+    },
+    cart: (state, action) => {
+      state.cart = action.payload;
     }
   },
   extraReducers: {
@@ -95,5 +99,5 @@ const categorySlice = createSlice({
   }
 });
 
-export const { clearState, selectCategory } = categorySlice.actions;
+export const { clearState, selectCategory, cart } = categorySlice.actions;
 export default categorySlice.reducer;
