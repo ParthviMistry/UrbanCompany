@@ -100,7 +100,9 @@ const CategoryPage = ({ textOnLeft = false }) => {
                       }}
                     >
                       <p>{i.title}</p>
-                      <p style={{ fontSize: "16px" }}>$ {i.price}</p>
+                      <p style={{ fontSize: "16px" }}>
+                        <i class="fa fa-rupee"></i> {i.price}
+                      </p>
                     </Typography>
                     <div style={{ margin: "20px", paddingRight: "20px" }}>
                       {!visible && (
