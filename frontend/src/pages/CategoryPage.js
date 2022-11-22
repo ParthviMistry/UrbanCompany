@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { useNavigate, Link } from "react-router-dom";
 import styled from "styled-components";
 import tw from "twin.macro";
 import {
@@ -25,6 +26,7 @@ const HeadingTitle = tw(SectionHeading)`lg:text-left leading-tight`;
 
 const CategoryPage = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const data = useSelector((state) => state?.category?.getDataBySubCategory);
   const visible = useSelector((state) => state?.category?.cart);
@@ -55,6 +57,24 @@ const CategoryPage = () => {
   return (
     <Container>
       <Content>
+        <div className="continue-shopping">
+          <Link to="/">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              fill="currentColor"
+              className="bi bi-arrow-left"
+              viewBox="0 0 16 16"
+            >
+              <path
+                fillRule="evenodd"
+                d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"
+              />
+            </svg>
+            <span>Back</span>
+          </Link>
+        </div>
         <Box>
           <Card
             title={data[0]?.categoryID?.[0].title}
@@ -118,7 +138,9 @@ const CategoryPage = () => {
                       }}
                     >
                       <p>{i.title}</p>
-                      <p style={{ fontSize: "16px" }}>$ {i.price}</p>
+                      <p style={{ fontSize: "16px" }}>
+                        <i class="fa fa-rupee"></i> {i.price}
+                      </p>
                     </Typography>
                   </div>
                   <Divider />
@@ -138,7 +160,9 @@ const CategoryPage = () => {
                 margin: "10px"
               }}
             >
-              <Button variant="contained">View Cart</Button>
+              <Button variant="contained" onClick={() => navigate("/cart")}>
+                View Cart
+              </Button>
             </div>
           )}
         </Box>

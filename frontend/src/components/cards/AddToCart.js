@@ -1,8 +1,13 @@
 import { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { Button } from "@mui/material";
 import Typography from "@mui/material/Typography";
 
+import { addToCart, decreaseCart } from "store/cartSlice";
+
 function AddToCart(props) {
+  const dispatch = useDispatch();
+
   const [counter, setCounter] = useState(1);
   let [visible, setvisible] = useState(false);
 
@@ -42,6 +47,7 @@ function AddToCart(props) {
                   return newArray;
                 });
                 setvisible(true);
+                dispatch(addToCart(props.id));
               }}
             >
               Add
@@ -73,13 +79,14 @@ function AddToCart(props) {
                       };
                       return newArray;
                     });
-                  decrementCounter();
+                  // decrementCounter();
+                  dispatch(decreaseCart(props.id));
                 }}
               >
                 -
               </Button>
               <Typography style={{ margin: "auto" }}>{counter}</Typography>
-              <Button onClick={incrementCounter}>+</Button>
+              <Button onClick={() => dispatch(addToCart(props.id))}>+</Button>
             </div>
           </>
         )}
