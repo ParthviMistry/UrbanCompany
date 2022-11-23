@@ -1,9 +1,10 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
+//Integrate backend category api
 export const getAllCategory = createAsyncThunk(
   "getAllCategory",
-  async (category, getState) => {
+  async (getState) => {
     try {
       const response = await axios.get(
         "http://localhost:5000/api/getAllCategory"

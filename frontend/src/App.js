@@ -12,6 +12,8 @@ import CategoriesPage from "pages/CategoriesPage";
 import SingleCategoryPage from "pages/SingleCategoryPage";
 import MainHeader from "components/headers/main";
 import MiniCenteredFooter from "components/footers/MiniCenteredFooter";
+import AboutUs from "pages/AboutUs";
+import ContactUs from "pages/ContactUs";
 
 import "primereact/resources/themes/lara-light-indigo/theme.css";
 import "primereact/resources/primereact.min.css";
@@ -19,6 +21,7 @@ import "primeicons/primeicons.css";
 
 const Container = tw.div`relative -mx-8 -mt-8 mr-8 xl:pl-10 pt-12`;
 
+//Frontend endPoint
 export default function App() {
   return (
     <>
@@ -35,6 +38,8 @@ export default function App() {
             <Route path="/signup" element={<SignUp />} />
             <Route path="/categories" element={<CategoriesPage />} />
             <Route path="/category/:id" element={<SingleCategoryPage />} />
+            <Route path="/about" element={<AboutUs />} />
+            <Route path="/contact" element={<ContactUs />} />
           </Routes>
         </Router>
         <MiniCenteredFooter />

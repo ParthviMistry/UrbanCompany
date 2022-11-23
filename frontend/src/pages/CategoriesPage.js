@@ -28,6 +28,7 @@ const TitleReviewContainer = tw.div`flex flex-col sm:flex-row sm:justify-between
 const Title = tw.h5`text-2xl font-bold`;
 const Description = tw.p`text-sm leading-loose`;
 
+//get all category data from redux
 const CategoriesPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();

@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import tw from "twin.macro";
 import styled from "styled-components";
+
 import imgs from "../../images/2.jpg";
-import { useSelector, useDispatch } from "react-redux";
+
 import {
   getAllCategory,
   getSubCategoriesByCategoryID
 } from "store/categorySlice";
-import { getsearch } from "store/searchSlice";
+
 import Autocomplete from "../../helpers/useAutoComplete";
 import CategorySearch from "../../helpers/categorySearch";
 
@@ -45,6 +47,13 @@ const Actions = styled.div`
   }
 `;
 
+/**
+ * Landing Page
+ * Use autoComplete and CategorySearch component
+ * Dispatch getAllCategory api and getSubCategoriesByCategoryID
+ * Apply category filter on getAllData and pass it on categorySearch component
+ */
+
 const FullWidthWithImage = ({
   heading = (
     <>
@@ -69,7 +78,6 @@ const FullWidthWithImage = ({
   );
 
   useEffect(() => {
-    dispatch(getsearch());
     dispatch(getAllCategory());
   }, []);
 

@@ -1,30 +1,19 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { Dropdown } from "primereact/dropdown";
 import { Country, State, City } from "country-state-city";
 import "../styles/Dropdown.css";
 
+//Use PrimeReact library for select country and use country-state-city npm package for get all country state city data
 const Autocomplete = () => {
-  const [lazyItvaems, setLazyItems] = useState([]);
-  const [value, setValue] = useState("");
-  const [lazyLoading, setLazyLoading] = useState(false);
   const [selectedCountry, setSelectedCountry] = useState(null);
 
-  const Countrylist =
-    Country.getAllCountries().length > 0 &&
-    Country.getAllCountries().map((item) => {
-      return { name: item.name, code: item.isoCode };
-    });
+  const Countrylist = Country.getAllCountries().map((item) => {
+    return { name: item.name, code: item.isoCode };
+  });
 
-  const Statelist =
-    City.getAllCities().length > 0 &&
-    City.getAllCities().map((item) => {
-      return { name: item.name, code: item.isoCode };
-    });
-
-  useEffect(() => {
-    setLazyItems(Array.from({ length: 100000 }));
-    setLazyLoading(false);
-  }, []);
+  const Statelist = City.getAllCities().map((item) => {
+    return { name: item.name, code: item.isoCode };
+  });
 
   const onCountryChange = (e) => {
     setSelectedCountry(e.value);
@@ -52,10 +41,6 @@ const Autocomplete = () => {
     );
   };
 
-  const handleSelect = (e) => {
-    setValue(e.target.value);
-  };
-
   return (
     <div className="dropdown-demo">
       <div className="card">
@@ -67,10 +52,9 @@ const Autocomplete = () => {
           virtualScrollerOptions={{ itemSize: 38 }}
           optionLabel="name"
           filter
-          onSelect={handleSelect}
           showClear
           filterBy="name"
-          placeholder="Select a Country"
+          placeholder="Select Country"
           valueTemplate={selectedCountryTemplate}
           itemTemplate={countryOptionTemplate}
         />

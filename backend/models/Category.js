@@ -2,18 +2,17 @@ const mongoose = require("mongoose");
 
 const categorySchema = mongoose.Schema(
   {
-    title: { type: String, trim: true }, // painting, cleaning
+    title: { type: String, trim: true }, // Home Painting, Home Cleaning
     description: { type: String },
     image: { type: String },
     mainTitleId: [
-      // HomeServies id
       {
         type: mongoose.Types.ObjectId,
         ref: "MainTitle",
         trim: true,
         index: true
       }
-    ]
+    ] // HomeServies Id
   },
   {
     timestamps: true

@@ -14,7 +14,6 @@ import { SectionHeading } from "components/misc/Headings";
 import CategoryModal from "components/modal/categoryModal";
 
 import { getSubCategoriesByCategoryID } from "store/categorySlice";
-import _ from "lodash";
 
 const HeadingWithControl = tw.div`flex mt-5 flex-col items-center sm:items-stretch sm:flex-row justify-between`;
 const Heading = tw(SectionHeading)``;
@@ -28,7 +27,7 @@ const ControlButton = styled(PrimaryButtonBase)`
 const PrevButton = tw(ControlButton)``;
 const NextButton = tw(ControlButton)``;
 
-const CardSlider = styled(Slider)`
+const SliderCard = styled(Slider)`
   ${tw`mt-16`}
   .slick-track {
     ${tw`flex`}
@@ -56,7 +55,8 @@ const RatingsInfo = styled.div`
 const Rating = tw.span`ml-2 font-bold`;
 const Description = tw.p`text-sm leading-loose mt-2 sm:mt-4`;
 
-export default (props) => {
+//Use react-slick for Slider and display all data according category
+const CardSlider = (props) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -118,11 +118,11 @@ export default (props) => {
           </NextButton>
         </Controls>
       </HeadingWithControl>
-      <CardSlider ref={setSliderRef} {...sliderSettings}>
+      <SliderCard ref={setSliderRef} {...sliderSettings}>
         {props.data?.map(
-          (card, index) =>
+          (card) =>
             card?.mainTitleId[0]._id === props.card?._id && (
-              <Card key={index} onClick={() => handleDrawer(card?._id)}>
+              <Card key={card._id} onClick={() => handleDrawer(card?._id)}>
                 <CardImage imageSrc={card?.image} />
                 <TextInfo>
                   <TitleReviewContainer>
@@ -140,7 +140,9 @@ export default (props) => {
               </Card>
             )
         )}
-      </CardSlider>
+      </SliderCard>
     </div>
   );
 };
+
+export default CardSlider;

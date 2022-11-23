@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
 import tw from "twin.macro";
+
 import Box from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
 import { Card } from "primereact/card";
@@ -23,7 +24,8 @@ const Description = tw.p`mt-2 font-medium text-secondary-100 leading-loose text-
 const Subheading = tw(SubheadingBase)`mb-4`;
 const HeadingTitle = tw(SectionHeading)`lg:text-left leading-tight`;
 
-const SingleCategoryPage = ({ textOnLeft = false }) => {
+//get subCategory data from redux and dispaly all data
+const SingleCategoryPage = () => {
   const data = useSelector((state) => state?.category?.getDataBySubCategory);
 
   const [counter, setCounter] = useState(1);

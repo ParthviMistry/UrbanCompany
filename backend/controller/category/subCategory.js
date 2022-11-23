@@ -1,6 +1,7 @@
 const SubCategory = require("../../models/SubCategory");
 const cloudinary = require("../../utils/cloudnary");
 
+//CRUD fro sub category
 const createSubCategory = async (req, res) => {
   try {
     const image = await cloudinary.uploader.upload(req.file.path);

@@ -4,6 +4,7 @@ import { combineReducers } from "redux";
 import authSlice from "./authSlice";
 import categorySlice from "./categorySlice";
 
+// Configure Slices
 const store = configureStore({
   reducer: combineReducers({
     auth: authSlice,

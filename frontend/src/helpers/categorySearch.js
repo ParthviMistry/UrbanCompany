@@ -6,6 +6,7 @@ import { selectCategory } from "store/categorySlice";
 
 const filter = createFilterOptions();
 
+//Use MUI Autocomplete for category search and store selected category data on redux
 const CategorySearch = (props) => {
   const dispatch = useDispatch();
 
@@ -26,20 +27,23 @@ const CategorySearch = (props) => {
   };
 
   useEffect(() => {
-    dispatch(selectCategory(id));
-  }, [id]);
+    if (id !== "") dispatch(selectCategory(id));
+  }, [dispatch, id]);
 
   const handleFilter = (options, params) => {
-    const filtered = filter(options, params);
+    let filtered = filter(options, params);
     const { inputValue } = params;
 
     const isExisting = options.some((option) => inputValue === option.label);
 
     if (inputValue !== "" && !isExisting) {
-      filtered.push({
-        inputValue,
-        label: "No Option"
-      });
+      filtered = [
+        ...filtered,
+        {
+          inputValue,
+          label: "No Option"
+        }
+      ];
     }
 
     return filtered;

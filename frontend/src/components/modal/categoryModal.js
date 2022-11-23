@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+
+import styled from "styled-components";
+import tw from "twin.macro";
+
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
@@ -9,10 +13,10 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
-import styled from "styled-components";
-import tw from "twin.macro";
+
 import _ from "lodash";
 
+//Create category modal for subCategory and redirect to subcategory page
 const CardImage = styled.div((props) => [
   `background-image: url("${props.imageSrc}");`,
   tw`w-10 h-10 sm:h-10 bg-cover bg-center rounded sm:rounded-none pr-2`

@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
+//searchSlice for getting all countries data from api
 export const getsearch = createAsyncThunk(
   "api/getSearch",
   async (category, getState) => {
@@ -18,16 +19,16 @@ export const getsearch = createAsyncThunk(
 );
 
 const searchSlice = createSlice({
-  name: "category",
+  name: "search",
   initialState: {
     loading: false,
     getdata: [],
-    error: "",
+    error: ""
   },
   reducers: {
     getdata: (state, action) => {
       state.getdata = {};
-    },
+    }
   },
   extraReducers: {
     [getsearch.fulfilled]: (state, action) => {
@@ -39,8 +40,8 @@ const searchSlice = createSlice({
     },
     [getsearch.rejected]: (state, action) => {
       state.error = action.payload;
-    },
-  },
+    }
+  }
 });
 
 export const { clearState } = searchSlice.actions;
