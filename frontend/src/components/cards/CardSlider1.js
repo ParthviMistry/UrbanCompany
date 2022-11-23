@@ -4,18 +4,19 @@ import { useNavigate } from "react-router-dom";
 import Slider from "react-slick";
 import tw from "twin.macro";
 import styled from "styled-components";
-import { PrimaryButton as PrimaryButtonBase } from "components/misc/Buttons";
+
 import { ReactComponent as StarIcon } from "feather-icons/dist/icons/star.svg";
 import { ReactComponent as ChevronLeftIcon } from "feather-icons/dist/icons/chevron-left.svg";
 import { ReactComponent as ChevronRightIcon } from "feather-icons/dist/icons/chevron-right.svg";
+
+import { PrimaryButton as PrimaryButtonBase } from "components/misc/Buttons";
 import { SectionHeading } from "components/misc/Headings";
 import CategoryModal from "components/modal/categoryModal";
+
 import { getSubCategoriesByCategoryID } from "store/categorySlice";
 import _ from "lodash";
 
-let title = [];
-
-const HeadingWithControl = tw.div`flex flex-col items-center sm:items-stretch sm:flex-row justify-between`;
+const HeadingWithControl = tw.div`flex mt-5 flex-col items-center sm:items-stretch sm:flex-row justify-between`;
 const Heading = tw(SectionHeading)``;
 const Controls = tw.div`flex items-center`;
 const ControlButton = styled(PrimaryButtonBase)`
@@ -90,7 +91,21 @@ export default (props) => {
   };
 
   return (
-    <>
+    <div style={{ marginTop: "50px" }}>
+      <button
+        style={{
+          color: "white",
+          float: "right",
+          marginLeft: "20px",
+          marginTop: "18px",
+          padding: "7px 10px",
+          background: "#6415FF",
+          borderRadius: "20px"
+        }}
+        onClick={() => navigate("/categories")}
+      >
+        View All
+      </button>
       {/* {drawer && <CategoryModal setDrawer={setDrawer} drawer={drawer} />} */}
       <HeadingWithControl>
         <Heading>{props.card?.title}</Heading>
@@ -126,6 +141,6 @@ export default (props) => {
             )
         )}
       </CardSlider>
-    </>
+    </div>
   );
 };

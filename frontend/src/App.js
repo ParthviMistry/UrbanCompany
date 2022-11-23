@@ -8,7 +8,8 @@ import tw from "twin.macro";
 import HotelTravelLandingPage from "demos/HotelTravelLandingPage.js";
 import Login from "../src/pages/Login";
 import SignUp from "pages/Signup";
-import CategoryPage from "pages/CategoryPage";
+import CategoriesPage from "pages/CategoriesPage";
+import SingleCategoryPage from "pages/SingleCategoryPage";
 import MainHeader from "components/headers/main";
 import MiniCenteredFooter from "components/footers/MiniCenteredFooter";
 
@@ -32,7 +33,8 @@ export default function App() {
             <Route path="/" element={<HotelTravelLandingPage />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<SignUp />} />
-            <Route path="/category/:id" element={<CategoryPage />} />
+            <Route path="/categories" element={<CategoriesPage />} />
+            <Route path="/category/:id" element={<SingleCategoryPage />} />
           </Routes>
         </Router>
         <MiniCenteredFooter />

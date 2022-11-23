@@ -64,17 +64,9 @@ const FullWidthWithImage = ({
   const [uniqData, setUniqData] = useState([]);
 
   const dataCategory = useSelector((state) => state?.category?.getdata);
-  const fillterdata = useSelector(
+  const filterData = useSelector(
     (state) => state?.category?.selectedCatgory?.data
   );
-
-  useEffect(() => {
-    fillterdata &&
-      fillterdata.map((item) =>
-        dispatch(getSubCategoriesByCategoryID(item?._id))
-      );
-  }, [fillterdata]);
-  let arr = [];
 
   useEffect(() => {
     dispatch(getsearch());
@@ -82,7 +74,16 @@ const FullWidthWithImage = ({
   }, []);
 
   useEffect(() => {
-    dataCategory?.length &&
+    filterData &&
+      filterData.map((item) =>
+        dispatch(getSubCategoriesByCategoryID(item?._id))
+      );
+  }, [filterData]);
+
+  let arr = [];
+
+  useEffect(() => {
+    dataCategory &&
       dataCategory.map((data) => {
         return arr.push(...data?.mainTitleId);
       });
@@ -98,12 +99,6 @@ const FullWidthWithImage = ({
   const categoryFilter =
     dataCategory.length > 0 &&
     dataCategory.map((item) => {
-      return { label: item.title, data: [item] };
-    });
-
-  const categoryFilter1 =
-    uniqData.length > 0 &&
-    uniqData.map((item) => {
       return { label: item.title, data: [item] };
     });
 

@@ -50,7 +50,7 @@ const categorySlice = createSlice({
     getdata: [],
     getDataByCategory: [],
     getDataBySubCategory: [],
-    selectedCatgory: undefined,
+    selectedCatgory: null,
     error: ""
   },
   reducers: {

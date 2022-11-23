@@ -2,17 +2,17 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
 import tw from "twin.macro";
-import {
-  SectionHeading,
-  Subheading as SubheadingBase
-} from "../components/misc/Headings";
 import Box from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
 import { Card } from "primereact/card";
 import { Paper } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
-import { getSubCategoriesByCategoryID } from "store/categorySlice";
+
+import {
+  SectionHeading,
+  Subheading as SubheadingBase
+} from "../components/misc/Headings";
 
 import _ from "lodash";
 
@@ -23,7 +23,7 @@ const Description = tw.p`mt-2 font-medium text-secondary-100 leading-loose text-
 const Subheading = tw(SubheadingBase)`mb-4`;
 const HeadingTitle = tw(SectionHeading)`lg:text-left leading-tight`;
 
-const CategoryPage = ({ textOnLeft = false }) => {
+const SingleCategoryPage = ({ textOnLeft = false }) => {
   const data = useSelector((state) => state?.category?.getDataBySubCategory);
 
   const [counter, setCounter] = useState(1);
@@ -155,7 +155,7 @@ const CategoryPage = ({ textOnLeft = false }) => {
     </Container>
   );
 };
-export default CategoryPage;
+export default SingleCategoryPage;
 
 const HeadingInfo = ({ subheading, heading, description, ...props }) => (
   <div>
