@@ -86,11 +86,26 @@ const deletecategory = async (req, res) => {
   }
 };
 
+const searchCategory = async (req, res) => {
+  try {
+    console.log("title...", req.body);
+
+    const data = await Category.find({
+      title: { $regex: req.body.title, $options: "i" }
+    });
+
+    return res.status(200).send(data);
+  } catch (error) {
+    return res.status(400).send(error.toString());
+  }
+};
+
 module.exports = {
   getAllCategory,
   getCategoryByID,
   getCategoriesByMainTitleID,
   createCategory,
   updatecategory,
-  deletecategory
+  deletecategory,
+  searchCategory
 };

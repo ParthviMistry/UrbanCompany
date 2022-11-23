@@ -44,6 +44,21 @@ export const getSubCategoriesByCategoryID = createAsyncThunk(
   }
 );
 
+export const searchCategory = createAsyncThunk(
+  "searchCategory",
+  async (search, getState) => {
+    try {
+      const response = await axios.post(
+        `http://localhost:5000/api/search`,
+        search
+      );
+      console.log("searchdata...", response.data);
+      return response.data;
+    } catch (e) {
+      return getState.rejectWithValue(e.response.data);
+    }
+  }
+);
 const categorySlice = createSlice({
   name: "category",
   initialState: {
@@ -52,6 +67,7 @@ const categorySlice = createSlice({
     getDataByCategory: [],
     getDataBySubCategory: [],
     selectedCatgory: null,
+    search: "",
     error: ""
   },
   reducers: {
@@ -91,6 +107,17 @@ const categorySlice = createSlice({
       state.loading = true;
     },
     [getCategoriesByMainTitleID.rejected]: (state, action) => {
+      state.error = action.payload;
+    },
+
+    [searchCategory.fulfilled]: (state, action) => {
+      state.search = action.payload;
+      state.loading = false;
+    },
+    [searchCategory.pending]: (state, action) => {
+      state.loading = true;
+    },
+    [searchCategory.rejected]: (state, action) => {
       state.error = action.payload;
     }
   }

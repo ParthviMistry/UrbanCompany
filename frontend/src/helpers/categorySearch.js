@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import TextField from "@mui/material/TextField";
 import { useSelector, useDispatch } from "react-redux";
 import Autocomplete, { createFilterOptions } from "@mui/material/Autocomplete";
-import { selectCategory } from "store/categorySlice";
+import { selectCategory, searchCategory } from "store/categorySlice";
 
 const filter = createFilterOptions();
 
@@ -10,12 +10,24 @@ const filter = createFilterOptions();
 const CategorySearch = (props) => {
   const dispatch = useDispatch();
 
+  const data = useSelector((state) => state?.category?.search);
+  console.log("search==>", data);
+
   const [value, setValue] = useState(null);
   const [option, setOption] = useState("");
   const [id, setId] = useState("");
 
+  console.log("option.....", option);
+
   const handleOnChange = (e, value) => {
-    setOption(e.target.value);
+    if (e.target.value.length > 3)
+      dispatch(searchCategory({ title: e.target.value }));
+
+    setOption(
+      data.map((i) => {
+        return { label: i.title };
+      })
+    );
 
     if (typeof value === "string") {
       setValue({ label: value });
@@ -60,7 +72,7 @@ const CategorySearch = (props) => {
       clearOnBlur
       handleHomeEndKeys
       freeSolo
-      options={option ? props?.category : []}
+      options={option ? option : []}
       renderOption={(props, option) =>
         option && <li {...props}>{option.label}</li>
       }

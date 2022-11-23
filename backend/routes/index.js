@@ -27,7 +27,9 @@ Router.post(
   upload.single("image"),
   categoryController.createCategory
 );
+Router.post("/api/search", categoryController.searchCategory);
 Router.get("/api/getAllCategory", categoryController.getAllCategory);
+
 Router.get("/api/getCategoryByID/:id", categoryController.getCategoryByID);
 Router.put(
   "/api/updateCategory/:id",
