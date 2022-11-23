@@ -1,22 +1,22 @@
 import React, { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import Slider from "react-slick";
 import tw from "twin.macro";
 import styled from "styled-components";
-import { SectionHeading } from "components/misc/Headings";
-import { PrimaryButton as PrimaryButtonBase } from "components/misc/Buttons";
+
 import { ReactComponent as StarIcon } from "feather-icons/dist/icons/star.svg";
 import { ReactComponent as ChevronLeftIcon } from "feather-icons/dist/icons/chevron-left.svg";
 import { ReactComponent as ChevronRightIcon } from "feather-icons/dist/icons/chevron-right.svg";
-import { useSelector, useDispatch } from "react-redux";
-import { Typography } from "@mui/material";
+
+import { PrimaryButton as PrimaryButtonBase } from "components/misc/Buttons";
+import { SectionHeading } from "components/misc/Headings";
+import CategoryModal from "components/modal/categoryModal";
+
+import { getSubCategoriesByCategoryID } from "store/categorySlice";
 import _ from "lodash";
 
-import CategoryModal from "components/modal/categoryModal";
-import { getSubCategoriesByCategoryID } from "store/categorySlice";
-
-let title = [];
-
-const HeadingWithControl = tw.div`flex flex-col items-center sm:items-stretch sm:flex-row justify-between`;
+const HeadingWithControl = tw.div`flex mt-5 flex-col items-center sm:items-stretch sm:flex-row justify-between`;
 const Heading = tw(SectionHeading)``;
 const Controls = tw.div`flex items-center`;
 const ControlButton = styled(PrimaryButtonBase)`
@@ -58,6 +58,8 @@ const Description = tw.p`text-sm leading-loose mt-2 sm:mt-4`;
 
 export default (props) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const [drawer, setDrawer] = useState(false);
   const [sliderRef, setSliderRef] = useState(null);
 
@@ -84,12 +86,27 @@ export default (props) => {
   const handleDrawer = (id) => {
     dispatch(getSubCategoriesByCategoryID(id));
     setDrawer(!drawer);
+    navigate(`/category/${id}`);
     return id;
   };
 
   return (
-    <>
-      {drawer && <CategoryModal setDrawer={setDrawer} drawer={drawer} />}
+    <div style={{ marginTop: "50px" }}>
+      <button
+        style={{
+          color: "white",
+          float: "right",
+          marginLeft: "20px",
+          marginTop: "18px",
+          padding: "7px 10px",
+          background: "#6415FF",
+          borderRadius: "20px"
+        }}
+        onClick={() => navigate("/categories")}
+      >
+        View All
+      </button>
+      {/* {drawer && <CategoryModal setDrawer={setDrawer} drawer={drawer} />} */}
       <HeadingWithControl>
         <Heading>{props.card?.title}</Heading>
         <Controls>
@@ -124,6 +141,6 @@ export default (props) => {
             )
         )}
       </CardSlider>
-    </>
+    </div>
   );
 };

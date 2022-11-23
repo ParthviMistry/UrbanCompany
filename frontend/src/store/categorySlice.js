@@ -50,8 +50,8 @@ const categorySlice = createSlice({
     getdata: [],
     getDataByCategory: [],
     getDataBySubCategory: [],
-    selectedCatgory: undefined,
     cart: false,
+    selectedCatgory: null,
     error: ""
   },
   reducers: {

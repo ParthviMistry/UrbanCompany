@@ -41,8 +41,9 @@ export default () => {
   }, [data]);
 
   useEffect(() => {
-    fillterdata && navigate("/category");
+    fillterdata && navigate(`/category/${fillterdata.map((i) => i._id)}`);
   }, [fillterdata]);
+
   return (
     <Container>
       <Content>

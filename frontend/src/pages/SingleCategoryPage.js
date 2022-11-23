@@ -3,10 +3,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, Link } from "react-router-dom";
 import styled from "styled-components";
 import tw from "twin.macro";
-import {
-  SectionHeading,
-  Subheading as SubheadingBase
-} from "../components/misc/Headings";
 import Box from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
 import { Card } from "primereact/card";
@@ -15,6 +11,12 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import { cart } from "store/categorySlice";
 import AddToCart from "../components/cards/AddToCart";
+
+import {
+  SectionHeading,
+  Subheading as SubheadingBase
+} from "../components/misc/Headings";
+
 import _ from "lodash";
 
 const Container = tw.div`relative`;
@@ -24,7 +26,7 @@ const Description = tw.p`mt-2 font-medium text-secondary-100 leading-loose text-
 const Subheading = tw(SubheadingBase)`mb-4`;
 const HeadingTitle = tw(SectionHeading)`lg:text-left leading-tight`;
 
-const CategoryPage = () => {
+const SingleCategoryPage = ({ textOnLeft = false }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -170,7 +172,7 @@ const CategoryPage = () => {
     </Container>
   );
 };
-export default CategoryPage;
+export default SingleCategoryPage;
 
 const HeadingInfo = ({ subheading, heading, description, ...props }) => (
   <div>

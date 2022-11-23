@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useEffect, useState } from "react";
 import TextField from "@mui/material/TextField";
 import { useSelector, useDispatch } from "react-redux";
 import Autocomplete, { createFilterOptions } from "@mui/material/Autocomplete";
@@ -9,26 +9,23 @@ const filter = createFilterOptions();
 const CategorySearch = (props) => {
   const dispatch = useDispatch();
 
-  const [value, setValue] = React.useState(null);
-  const [value1, setValue1] = React.useState("");
-  const [id, setId] = React.useState("");
+  const [value, setValue] = useState(null);
+  const [option, setOption] = useState("");
+  const [id, setId] = useState("");
 
   const handleOnChange = (e, value) => {
-    setValue1(e.target.value);
+    setOption(e.target.value);
+
     if (typeof value === "string") {
-      setValue({
-        label: value
-      });
+      setValue({ label: value });
     } else if (value && value.inputValue) {
-      setValue({
-        label: value.inputValue
-      });
+      setValue({ label: value.inputValue });
     } else {
       setValue(value);
     }
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     dispatch(selectCategory(id));
   }, [id]);
 
@@ -59,7 +56,7 @@ const CategorySearch = (props) => {
       clearOnBlur
       handleHomeEndKeys
       freeSolo
-      options={value1 ? props?.category : []}
+      options={option ? props?.category : []}
       renderOption={(props, option) =>
         option && <li {...props}>{option.label}</li>
       }

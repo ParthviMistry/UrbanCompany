@@ -2,10 +2,10 @@ import { createSlice } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
 
 const initialState = {
-  //   cartItems: localStorage.getItem("cartItems")
-  //     ? JSON.parse(localStorage.getItem("cartItems"))
-  //     : [],
-  cartItems: [],
+  cartItems: localStorage.getItem("cartItems")
+    ? JSON.parse(localStorage.getItem("cartItems"))
+    : [],
+  // cartItems: [],
   cartTotalQuantity: 0,
   cartTotalAmount: 0
 };
@@ -16,9 +16,9 @@ const cartSlice = createSlice({
   reducers: {
     addToCart(state, action) {
       const existingIndex = state.cartItems.findIndex(
-        (item) => item.id === action.payload.id
+        (item) => item._id === action.payload._id
       );
-      console.log("existingIndex", existingIndex);
+
       if (existingIndex >= 0) {
         state.cartItems[existingIndex] = {
           ...state.cartItems[existingIndex],
@@ -34,7 +34,7 @@ const cartSlice = createSlice({
           position: "bottom-left"
         });
       }
-      //   localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
+      localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
     },
     decreaseCart(state, action) {
       const itemIndex = state.cartItems.findIndex(
@@ -59,7 +59,7 @@ const cartSlice = createSlice({
         });
       }
 
-      //   localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
+      localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
     },
     removeFromCart(state, action) {
       state.cartItems.map((cartItem) => {
@@ -74,7 +74,7 @@ const cartSlice = createSlice({
             position: "bottom-left"
           });
         }
-        // localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
+        localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
         return state;
       });
     },
@@ -100,7 +100,7 @@ const cartSlice = createSlice({
     },
     clearCart(state, action) {
       state.cartItems = [];
-      //   localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
+      localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
       toast.error("Cart cleared", { position: "bottom-left" });
     }
   }
