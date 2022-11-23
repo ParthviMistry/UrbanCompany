@@ -29,20 +29,15 @@ const ThreeColSlider = () => {
     dispatch(getAllCategory());
   }, []);
 
+  let arr = [];
   useEffect(() => {
-    // data?.length &&
-    //   data.map((data) => {
-    //     return maintitleidarr.push(...data?.mainTitleId);
-    //   });
+    data?.length &&
+      data.map((data) => {
+        return arr.push(...data?.mainTitleId);
+      });
 
     // settitle(filterData);
-    !filterData &&
-      settitle(
-        _.uniqBy(
-          data.map((data) => data?.mainTitleId),
-          "title"
-        )
-      );
+    !filterData && settitle(_.uniqBy(arr, "title"));
   }, [data]);
 
   useEffect(() => {

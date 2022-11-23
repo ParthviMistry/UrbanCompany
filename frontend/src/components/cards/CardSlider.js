@@ -122,7 +122,7 @@ const CardSlider = (props) => {
         {props.data?.map(
           (card) =>
             card?.mainTitleId[0]._id === props.card?._id && (
-              <Card key={card._id} onClick={() => handleDrawer(card?._id)}>
+              <Card onClick={() => handleDrawer(card?._id)}>
                 <CardImage imageSrc={card?.image} />
                 <TextInfo>
                   <TitleReviewContainer>
