@@ -1,6 +1,7 @@
 const Category = require("../../models/Category");
 const cloudinary = require("../../utils/cloudnary");
 
+//CRUD for category
 const createCategory = async (req, res) => {
   try {
     const image = await cloudinary.uploader.upload(req.file.path);
@@ -24,16 +25,6 @@ const createCategory = async (req, res) => {
 const getAllCategory = async (req, res) => {
   try {
     const data = await Category.find().populate("mainTitleId");
-
-    // let iddata = data.map((item) => {
-    //   return item?.mainTitleId;
-    // });
-
-    // let id = iddata.map((data) => {
-    //   return data?.map((dataitem) => dataitem?._id);
-    // });
-
-    // const category = await Category.find({ mainTitleId: { $in: id } });
 
     return res.status(200).send(data);
   } catch (error) {
@@ -95,11 +86,27 @@ const deletecategory = async (req, res) => {
   }
 };
 
+const searchCategory = async (req, res) => {
+  try {
+    let data;
+
+    if (req.body.title.length > 2)
+      data = await Category.find({
+        title: { $regex: req.body.title, $options: "i" }
+      });
+
+    return res.status(200).send(data);
+  } catch (error) {
+    return res.status(400).send(error.toString());
+  }
+};
+
 module.exports = {
   getAllCategory,
   getCategoryByID,
   getCategoriesByMainTitleID,
   createCategory,
   updatecategory,
-  deletecategory
+  deletecategory,
+  searchCategory
 };

@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
+//Integrate backend auth api
 export const loginAPI = createAsyncThunk(
   "auth/loginAPI",
   async (user, getState) => {
@@ -39,7 +40,7 @@ const authSlice = createSlice({
     isAuthenticated: false,
     token: "",
     isLogin: false,
-    error: "",
+    error: ""
   },
   reducers: {
     clearState: (state, action) => {
@@ -48,17 +49,14 @@ const authSlice = createSlice({
       state.userData = {};
       state.isAuthenticated = false;
       state.token = "";
-    },
+    }
   },
   extraReducers: {
     [loginAPI.fulfilled]: (state, action) => {
       state.userData = action.payload.user;
       state.token = action.payload.token;
-        localStorage.setItem(
-          "token",
-          action.payload.token
-        );
-        localStorage.setItem("user", JSON.stringify(action.payload.user));
+      localStorage.setItem("token", action.payload.token);
+      localStorage.setItem("user", JSON.stringify(action.payload.user));
       state.loading = false;
       state.isLogin = true;
     },
@@ -79,8 +77,8 @@ const authSlice = createSlice({
     },
     [signUpAPI.rejected]: (state, action) => {
       state.error = action.payload;
-    },
-  },
+    }
+  }
 });
 
 export const { clearState } = authSlice.actions;

@@ -1,5 +1,6 @@
 const MainTitle = require("../models/MainTitle");
 
+//CRUD for mainTitle
 const createMainTitle = async (req, res) => {
   try {
     const postMainTitle = new MainTitle(req.body);
@@ -23,9 +24,10 @@ const getAllMainTitle = async (req, res) => {
   }
 };
 
-const getMAinTitleByID = async (req, res) => {
+const getMainTitleByID = async (req, res) => {
   try {
     const category = await MainTitle.findById(req.params.id);
+
     return res.status(200).send(category);
   } catch (error) {
     return res.status(400).send(error.toString());
@@ -37,7 +39,7 @@ const updateMainTitle = async (req, res) => {
     const updatedCategory = await MainTitle.findByIdAndUpdate(
       req.params.id,
       {
-        $set: req.body,
+        $set: req.body
       },
       { new: true }
     );
@@ -65,7 +67,7 @@ const deleteMainTitle = async (req, res) => {
 module.exports = {
   createMainTitle,
   getAllMainTitle,
-  getMAinTitleByID,
+  getMainTitleByID,
   updateMainTitle,
-  deleteMainTitle,
+  deleteMainTitle
 };

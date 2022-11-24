@@ -1,17 +1,21 @@
 import React, { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import tw from "twin.macro";
 import styled from "styled-components";
+
 import imgs from "../../images/2.jpg";
-import { useSelector, useDispatch } from "react-redux";
+
 import {
   getAllCategory,
   getSubCategoriesByCategoryID
 } from "store/categorySlice";
-import { getsearch } from "store/searchSlice";
+
 import Autocomplete from "../../helpers/useAutoComplete";
 import CategorySearch from "../../helpers/categorySearch";
 
 import _ from "lodash";
+
+import "../../styles/index.css";
 
 const Container = tw.div`relative -mx-8 -mt-8`;
 const TwoColumn = tw.div`flex flex-col lg:flex-row bg-gray-100`;
@@ -45,6 +49,13 @@ const Actions = styled.div`
   }
 `;
 
+/**
+ * Landing Page
+ * Use autoComplete and CategorySearch component
+ * Dispatch getAllCategory api and getSubCategoriesByCategoryID
+ * Apply category filter on getAllData and pass it on categorySearch component
+ */
+
 const FullWidthWithImage = ({
   heading = (
     <>
@@ -69,15 +80,11 @@ const FullWidthWithImage = ({
   );
 
   useEffect(() => {
-    dispatch(getsearch());
     dispatch(getAllCategory());
   }, []);
 
   useEffect(() => {
-    filterData &&
-      filterData.map((item) =>
-        dispatch(getSubCategoriesByCategoryID(item?._id))
-      );
+    dispatch(getSubCategoriesByCategoryID(filterData?._id));
   }, [filterData]);
 
   let arr = [];
@@ -107,18 +114,12 @@ const FullWidthWithImage = ({
       <TwoColumn>
         <LeftColumn>
           <Content>
-            <div
-              style={{
-                display: "flex",
-                marginBottom: "7%",
-                justifyContent: "space-around"
-              }}
-            >
-              <div style={{ width: "30%" }}>
+            <div className="search">
+              <div className="countrySearch">
                 <Autocomplete />
               </div>
-              <div style={{ width: "67%" }}>
-                <CategorySearch category={categoryFilter} />
+              <div className="categorySearch">
+                <CategorySearch />
               </div>
             </div>
             <Heading>{heading}</Heading>

@@ -1,9 +1,10 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
+//Integrate backend category api
 export const getAllCategory = createAsyncThunk(
   "getAllCategory",
-  async (category, getState) => {
+  async (getState) => {
     try {
       const response = await axios.get(
         "http://localhost:5000/api/getAllCategory"
@@ -43,6 +44,21 @@ export const getSubCategoriesByCategoryID = createAsyncThunk(
   }
 );
 
+export const searchCategory = createAsyncThunk(
+  "searchCategory",
+  async (search, getState) => {
+    try {
+      const response = await axios.post(
+        `http://localhost:5000/api/search`,
+        search
+      );
+      console.log("searchdata...", response.data);
+      return response.data;
+    } catch (e) {
+      return getState.rejectWithValue(e.response.data);
+    }
+  }
+);
 const categorySlice = createSlice({
   name: "category",
   initialState: {
@@ -52,6 +68,7 @@ const categorySlice = createSlice({
     getDataBySubCategory: [],
     cart: false,
     selectedCatgory: null,
+    search: "",
     error: ""
   },
   reducers: {
@@ -63,6 +80,9 @@ const categorySlice = createSlice({
     },
     cart: (state, action) => {
       state.cart = action.payload;
+    },
+    clearSearch: (state, action) => {
+      state.search = "";
     }
   },
   extraReducers: {
@@ -95,9 +115,21 @@ const categorySlice = createSlice({
     },
     [getCategoriesByMainTitleID.rejected]: (state, action) => {
       state.error = action.payload;
+    },
+
+    [searchCategory.fulfilled]: (state, action) => {
+      state.search = action.payload;
+      state.loading = false;
+    },
+    [searchCategory.pending]: (state, action) => {
+      state.loading = true;
+    },
+    [searchCategory.rejected]: (state, action) => {
+      state.error = action.payload;
     }
   }
 });
 
-export const { clearState, selectCategory, cart } = categorySlice.actions;
+export const { clearState, selectCategory, clearSearch, cart } =
+  categorySlice.actions;
 export default categorySlice.reducer;

@@ -14,7 +14,10 @@ import { SectionHeading } from "components/misc/Headings";
 import CategoryModal from "components/modal/categoryModal";
 
 import { getSubCategoriesByCategoryID } from "store/categorySlice";
+
 import _ from "lodash";
+
+import "../../styles/index.css";
 
 const HeadingWithControl = tw.div`flex mt-5 flex-col items-center sm:items-stretch sm:flex-row justify-between`;
 const Heading = tw(SectionHeading)``;
@@ -28,7 +31,7 @@ const ControlButton = styled(PrimaryButtonBase)`
 const PrevButton = tw(ControlButton)``;
 const NextButton = tw(ControlButton)``;
 
-const CardSlider = styled(Slider)`
+const SliderCard = styled(Slider)`
   ${tw`mt-16`}
   .slick-track {
     ${tw`flex`}
@@ -56,7 +59,8 @@ const RatingsInfo = styled.div`
 const Rating = tw.span`ml-2 font-bold`;
 const Description = tw.p`text-sm leading-loose mt-2 sm:mt-4`;
 
-export default (props) => {
+//Use react-slick for Slider and display all data according category
+const CardSlider = (props) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -91,19 +95,8 @@ export default (props) => {
   };
 
   return (
-    <div style={{ marginTop: "50px" }}>
-      <button
-        style={{
-          color: "white",
-          float: "right",
-          marginLeft: "20px",
-          marginTop: "18px",
-          padding: "7px 10px",
-          background: "#6415FF",
-          borderRadius: "20px"
-        }}
-        onClick={() => navigate("/categories")}
-      >
+    <div className="slider-container">
+      <button className="view-all-btn" onClick={() => navigate("/categories")}>
         View All
       </button>
       {/* {drawer && <CategoryModal setDrawer={setDrawer} drawer={drawer} />} */}
@@ -118,11 +111,11 @@ export default (props) => {
           </NextButton>
         </Controls>
       </HeadingWithControl>
-      <CardSlider ref={setSliderRef} {...sliderSettings}>
+      <SliderCard ref={setSliderRef} {...sliderSettings}>
         {props.data?.map(
-          (card, index) =>
+          (card) =>
             card?.mainTitleId[0]._id === props.card?._id && (
-              <Card key={index} onClick={() => handleDrawer(card?._id)}>
+              <Card onClick={() => handleDrawer(card?._id)}>
                 <CardImage imageSrc={card?.image} />
                 <TextInfo>
                   <TitleReviewContainer>
@@ -133,14 +126,16 @@ export default (props) => {
                     </RatingsInfo>
                   </TitleReviewContainer>
                   <Description>{card?.description}</Description>
-                  <Description style={{ fontWeight: "bold" }}>
+                  <Description className="view-more-text">
                     View more...
                   </Description>
                 </TextInfo>
               </Card>
             )
         )}
-      </CardSlider>
+      </SliderCard>
     </div>
   );
 };
+
+export default CardSlider;

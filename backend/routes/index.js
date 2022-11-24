@@ -9,27 +9,45 @@ const upload = require("../utils/multer");
 const Router = express.Router();
 Router.use(express.json());
 
-//Authentication
+//Authentication endPoints
 Router.post("/api/login", authController.userLogin);
 Router.post("/api/signup", authController.userSignUp);
 Router.put("/api/updateUser/:id", authController.updateUser);
 Router.delete("/api/deleteUser/:id", authController.deleteUser);
 
-//MainTitle
+//MainTitle endPoints
 Router.post("/api/mainTitle", MainTitleController.createMainTitle);
 Router.get("/api/getAllMainTitle", MainTitleController.getAllMainTitle);
 Router.put("/api/updateMainTitle", MainTitleController.updateMainTitle);
 Router.delete("/api/deleteMainTitle", MainTitleController.deleteMainTitle);
 
-//Category
-Router.post("/api/category", upload.single("image"), categoryController.createCategory);
+//Category endPoints
+Router.post(
+  "/api/category",
+  upload.single("image"),
+  categoryController.createCategory
+);
+Router.post("/api/search", categoryController.searchCategory);
 Router.get("/api/getAllCategory", categoryController.getAllCategory);
-Router.get("/api/getCategoryByID/:id", categoryController.getCategoryByID);
-Router.put("/api/updateCategory/:id", upload.single("image"), categoryController.updatecategory);
-Router.delete("/api/deleteCategory/:id", categoryController.deletecategory);
 
-//SubCategory
-Router.post("/api/subCategory", upload.single("image"), subCategoryController.createSubCategory);
+Router.get("/api/getCategoryByID/:id", categoryController.getCategoryByID);
+Router.put(
+  "/api/updateCategory/:id",
+  upload.single("image"),
+  categoryController.updatecategory
+);
+Router.delete("/api/deleteCategory/:id", categoryController.deletecategory);
+Router.get(
+  "/api/getCategoriesByMainTitleID/:id",
+  categoryController.getCategoriesByMainTitleID
+);
+
+//SubCategory endPoints
+Router.post(
+  "/api/subCategory",
+  upload.single("image"),
+  subCategoryController.createSubCategory
+);
 Router.get("/api/getAllSubCategory", subCategoryController.getAllSubCategory);
 Router.get(
   "/api/getSubCategoryById/:id",
@@ -45,10 +63,6 @@ Router.delete(
   subCategoryController.deleteSubCategory
 );
 
-Router.get(
-  "/api/getCategoriesByMainTitleID/:id",
-  categoryController.getCategoriesByMainTitleID
-);
 Router.get(
   "/api/getSubCategoriesByCategoryID/:id",
   subCategoryController.getSubCategoriesByCategoryID

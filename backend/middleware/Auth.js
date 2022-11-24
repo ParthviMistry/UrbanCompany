@@ -1,6 +1,7 @@
 const UserModel = require("../models/User");
 const jwt = require("jsonwebtoken");
 
+//Checked user is Login or not
 const auth = async (req, res, next) => {
   try {
     const token = req.header("Authorization").replace("Bearer ", "");
@@ -8,11 +9,11 @@ const auth = async (req, res, next) => {
 
     const user = await UserModel.findOne({
       _id: decode._id,
-      email: decode.email,
+      email: decode.email
     });
 
     if (!user) throw new Error();
-    
+
     req.user = user;
 
     next();

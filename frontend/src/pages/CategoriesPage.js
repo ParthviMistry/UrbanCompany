@@ -28,6 +28,7 @@ const TitleReviewContainer = tw.div`flex flex-col sm:flex-row sm:justify-between
 const Title = tw.h5`text-2xl font-bold`;
 const Description = tw.p`text-sm leading-loose`;
 
+//get all category data from redux
 const CategoriesPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -52,7 +53,7 @@ const CategoriesPage = () => {
             return (
               <>
                 <Grid item xs={4}>
-                  <Paper style={{ margin: "40px" }}>
+                  <Paper className="categoriesPaper">
                     <Card>
                       <CardImage imageSrc={i?.image} />
                       <TextInfo onClick={handleDrawer(i._id)}>
@@ -61,7 +62,7 @@ const CategoriesPage = () => {
                           <StarIcon />
                         </TitleReviewContainer>
                         <Description>{i?.description}</Description>
-                        <Description style={{ fontWeight: "bold" }}>
+                        <Description className="categoriesDescription">
                           View more...
                         </Description>
                       </TextInfo>

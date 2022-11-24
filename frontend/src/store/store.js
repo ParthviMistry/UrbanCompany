@@ -5,6 +5,7 @@ import authSlice from "./authSlice";
 import categorySlice from "./categorySlice";
 import cartSlice from "./cartSlice";
 
+// Configure Slices
 const store = configureStore({
   reducer: combineReducers({
     auth: authSlice,

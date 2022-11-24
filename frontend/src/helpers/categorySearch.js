@@ -2,76 +2,84 @@ import React, { useEffect, useState } from "react";
 import TextField from "@mui/material/TextField";
 import { useSelector, useDispatch } from "react-redux";
 import Autocomplete, { createFilterOptions } from "@mui/material/Autocomplete";
-import { selectCategory } from "store/categorySlice";
+import {
+  selectCategory,
+  searchCategory,
+  clearSearch
+} from "store/categorySlice";
 
-const filter = createFilterOptions();
+import "../styles/index.css";
 
-const CategorySearch = (props) => {
+// const filter = createFilterOptions();
+
+//Use MUI Autocomplete for category search and store selected category data on redux
+const CategorySearch = () => {
   const dispatch = useDispatch();
+
+  const data = useSelector((state) => state?.category?.search);
 
   const [value, setValue] = useState(null);
   const [option, setOption] = useState("");
-  const [id, setId] = useState("");
-
-  const handleOnChange = (e, value) => {
-    setOption(e.target.value);
-
-    if (typeof value === "string") {
-      setValue({ label: value });
-    } else if (value && value.inputValue) {
-      setValue({ label: value.inputValue });
-    } else {
-      setValue(value);
-    }
-  };
 
   useEffect(() => {
-    dispatch(selectCategory(id));
-  }, [id]);
+    if (option !== "") dispatch(selectCategory(option));
+  }, [dispatch, option]);
 
-  const handleFilter = (options, params) => {
-    const filtered = filter(options, params);
-    const { inputValue } = params;
+  const handleOnChange = (e, value) => {
+    if (e.target.value.length > 2)
+      dispatch(searchCategory({ title: e.target.value }));
+    else dispatch(clearSearch());
 
-    const isExisting = options.some((option) => inputValue === option.label);
+    setOption(
+      data
+        ? data.map((i) => {
+            return { label: i.title, data: i };
+          })
+        : ""
+    );
 
-    if (inputValue !== "" && !isExisting) {
-      filtered.push({
-        inputValue,
-        label: "No Option"
-      });
-    }
-
-    return filtered;
+    setValue({ label: value });
   };
+
+  // const handleFilter = (options, params) => {
+  //   let filtered = filter(options, params);
+  //   const { inputValue } = params;
+  //   const isExisting = options.some((option) => inputValue === option.label);
+  //   if (inputValue !== "" && !isExisting) {
+  //     filtered = [
+  //       ...filtered,
+  //       {
+  //         inputValue,
+  //         label: "No Option"
+  //       }
+  //     ];
+  //   }
+  //   return filtered;
+  // };
 
   return (
     <Autocomplete
+      className="categorySearch"
       onInputChange={handleOnChange}
-      filterOptions={handleFilter}
-      onChange={(event, value) => setId(value)}
+      // filterOptions={handleFilter}
+      onChange={(e, i) => setOption(i)}
       value={value}
+      options={option && data ? option : []}
+      renderInput={(params) => (
+        <TextField
+          {...params}
+          label="Search Category"
+          InputProps={{
+            ...params.InputProps,
+            type: "search"
+          }}
+        />
+      )}
       fullWidth
       selectOnFocus
       clearOnBlur
       handleHomeEndKeys
-      freeSolo
-      options={option ? props?.category : []}
-      renderOption={(props, option) =>
-        option && <li {...props}>{option.label}</li>
-      }
-      renderInput={(params) => (
-        <TextField {...params} label="Search Category" />
-      )}
-      getOptionLabel={(option) => {
-        if (typeof option === "string") {
-          return option;
-        }
-        if (option.inputValue) {
-          return option.inputValue;
-        }
-        return option.label;
-      }}
+      disableClearable
     />
   );
 };

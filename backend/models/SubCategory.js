@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const subCategorySchema = mongoose.Schema(
   {
-    title: { type: String, trim: true },
+    title: { type: String, trim: true }, // Kitchen Cleaning
     description: { type: String },
     image: { type: String },
     price: { type: Number },
@@ -11,12 +11,12 @@ const subCategorySchema = mongoose.Schema(
       {
         type: mongoose.Types.ObjectId,
         ref: "Category",
-        trim: true,
-      },
-    ],
+        trim: true
+      }
+    ] // Home Cleaning Id
   },
   {
-    timestamps: true,
+    timestamps: true
   }
 );
 
