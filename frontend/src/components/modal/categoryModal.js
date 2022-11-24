@@ -16,6 +16,8 @@ import ListItemText from "@mui/material/ListItemText";
 
 import _ from "lodash";
 
+import "../../styles/index.css";
+
 //Create category modal for subCategory and redirect to subcategory page
 const CardImage = styled.div((props) => [
   `background-image: url("${props.imageSrc}");`,
@@ -58,11 +60,7 @@ const CategoryModal = ({ setDrawer, drawer }) => {
             <ListItem>
               <ListItemButton onClick={() => handleClick()}>
                 <CardImage imageSrc={i.image} />
-                <ListItemText
-                  fontSize="bold"
-                  primary={i.title}
-                  style={{ paddingLeft: "20px" }}
-                />
+                <ListItemText className="listTitle" primary={i.title} />
               </ListItemButton>
             </ListItem>
           ))}

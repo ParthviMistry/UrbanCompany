@@ -17,6 +17,8 @@ import {
 
 import _ from "lodash";
 
+import "../styles/index.css";
+
 const Container = tw.div`relative`;
 const Content = tw.div`max-w-screen-xl mx-auto py-10 lg:py-10`;
 const Description = tw.p`mt-2 font-medium text-secondary-100 leading-loose text-sm`;
@@ -41,42 +43,27 @@ const SingleCategoryPage = () => {
       <Content>
         <Box>
           <Card
+            className="singleCategoryTitle"
             title={data[0]?.categoryID?.[0].title}
-            style={{ width: "100%" }}
           >
-            <div
-              style={{ marginBottom: "2em", display: "flex", padding: "20px" }}
-            >
+            <div className="singleCategoryImg">
               <img
                 alt="Card"
                 src={data[0]?.categoryID?.[0].image}
                 width="300px"
                 height="300px"
               />
-              <p style={{ marginLeft: "20px" }}>
-                {data[0]?.categoryID?.[0].description}
-              </p>
+              <p>{data[0]?.categoryID?.[0].description}</p>
             </div>
           </Card>
           <Divider />
           <HeadingInfo tw="hidden lg:block" subheading="SubCategory" />
-          <div
-            style={{ marginBottom: "2em", display: "flex", padding: "20px" }}
-          >
+          <div className="singleCategoryMain">
             {data.map((i) => {
               return (
-                <Paper title={i.title} style={{ marginLeft: "20px" }}>
-                  <img
-                    alt="Card"
-                    src={i.image}
-                    style={{
-                      padding: "20px",
-                      width: "150px",
-                      height: "120px",
-                      backgroundSize: "cover"
-                    }}
-                  />
-                  <p style={{ padding: "20px" }}>{i.title}</p>
+                <Paper className="title" title={i.title}>
+                  <img alt="Card" src={i.image} />
+                  <p>{i.title}</p>
                 </Paper>
               );
             })}
@@ -86,13 +73,7 @@ const SingleCategoryPage = () => {
             return (
               <>
                 <Paper>
-                  <div
-                    style={{
-                      display: "flex",
-                      margin: "20px 40px 5px",
-                      justifyContent: "space-between"
-                    }}
-                  >
+                  <div className="subcategory">
                     <Typography
                       variant="h5"
                       sx={{
@@ -102,21 +83,15 @@ const SingleCategoryPage = () => {
                       }}
                     >
                       <p>{i.title}</p>
-                      <p style={{ fontSize: "16px" }}>
+                      <p className="price">
                         <i class="fa fa-rupee"></i> {i.price}
                       </p>
                     </Typography>
-                    <div style={{ margin: "20px", paddingRight: "20px" }}>
+                    <div className="btn">
                       {!visible && (
                         <>
                           <div
-                            style={{
-                              border: "3px solid #000000",
-                              width: "150px",
-                              height: "50px",
-                              textAlign: "center",
-                              padding: "10px"
-                            }}
+                            className="addBtn"
                             onClick={() => setvisible(true)}
                           >
                             Add
@@ -126,16 +101,9 @@ const SingleCategoryPage = () => {
 
                       {visible && (
                         <>
-                          <div
-                            style={{
-                              border: "3px solid #000000",
-                              width: "150px",
-                              height: "50px",
-                              display: "flex"
-                            }}
-                          >
+                          <div className="quantityBtn">
                             <Button onClick={decrementCounter}>-</Button>
-                            <Typography style={{ margin: "auto" }}>
+                            <Typography className="quantityText">
                               {counter}
                             </Typography>
                             <Button onClick={incrementCounter}>+</Button>
@@ -145,7 +113,7 @@ const SingleCategoryPage = () => {
                     </div>
                   </div>
                   <Divider />
-                  <div style={{ padding: "20px 60px" }}>
+                  <div className="subCategoryDescription">
                     <p>{i.description}</p>
                   </div>
                 </Paper>

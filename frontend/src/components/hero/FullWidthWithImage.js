@@ -15,6 +15,8 @@ import CategorySearch from "../../helpers/categorySearch";
 
 import _ from "lodash";
 
+import "../../styles/index.css";
+
 const Container = tw.div`relative -mx-8 -mt-8`;
 const TwoColumn = tw.div`flex flex-col lg:flex-row bg-gray-100`;
 const LeftColumn = tw.div`ml-8 mr-8 xl:pl-10`;
@@ -112,18 +114,12 @@ const FullWidthWithImage = ({
       <TwoColumn>
         <LeftColumn>
           <Content>
-            <div
-              style={{
-                display: "flex",
-                marginBottom: "7%",
-                justifyContent: "space-around"
-              }}
-            >
-              <div style={{ width: "30%" }}>
+            <div className="search">
+              <div className="countrySearch">
                 <Autocomplete />
               </div>
-              <div style={{ width: "67%" }}>
-                <CategorySearch category={categoryFilter} />
+              <div className="categorySearch">
+                <CategorySearch />
               </div>
             </div>
             <Heading>{heading}</Heading>

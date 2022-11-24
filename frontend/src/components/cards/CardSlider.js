@@ -15,6 +15,8 @@ import CategoryModal from "components/modal/categoryModal";
 
 import { getSubCategoriesByCategoryID } from "store/categorySlice";
 
+import "../../styles/index.css";
+
 const HeadingWithControl = tw.div`flex mt-5 flex-col items-center sm:items-stretch sm:flex-row justify-between`;
 const Heading = tw(SectionHeading)``;
 const Controls = tw.div`flex items-center`;
@@ -91,19 +93,8 @@ const CardSlider = (props) => {
   };
 
   return (
-    <div style={{ marginTop: "50px" }}>
-      <button
-        style={{
-          color: "white",
-          float: "right",
-          marginLeft: "20px",
-          marginTop: "18px",
-          padding: "7px 10px",
-          background: "#6415FF",
-          borderRadius: "20px"
-        }}
-        onClick={() => navigate("/categories")}
-      >
+    <div className="slider-container">
+      <button className="view-all-btn" onClick={() => navigate("/categories")}>
         View All
       </button>
       {/* {drawer && <CategoryModal setDrawer={setDrawer} drawer={drawer} />} */}
@@ -133,7 +124,7 @@ const CardSlider = (props) => {
                     </RatingsInfo>
                   </TitleReviewContainer>
                   <Description>{card?.description}</Description>
-                  <Description style={{ fontWeight: "bold" }}>
+                  <Description className="view-more-text">
                     View more...
                   </Description>
                 </TextInfo>

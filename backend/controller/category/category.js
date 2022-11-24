@@ -88,9 +88,12 @@ const deletecategory = async (req, res) => {
 
 const searchCategory = async (req, res) => {
   try {
-    const data = await Category.find({
-      title: { $regex: req.body.title, $options: "i" }
-    });
+    let data;
+
+    if (req.body.title.length > 2)
+      data = await Category.find({
+        title: { $regex: req.body.title, $options: "i" }
+      });
 
     return res.status(200).send(data);
   } catch (error) {
