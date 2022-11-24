@@ -31,30 +31,7 @@ const SingleCategoryPage = ({ textOnLeft = false }) => {
   const navigate = useNavigate();
 
   const data = useSelector((state) => state?.category?.getDataBySubCategory);
-  const visible = useSelector((state) => state?.category?.cart);
-
-  const [visibleArr, setArray] = useState([]);
-
-  useEffect(() => {
-    data.forEach((idx) => {
-      setArray((prevArray) => {
-        let newArray = prevArray;
-        newArray.push({
-          id: idx,
-          visible: false
-        });
-        return newArray;
-      });
-    });
-  }, [data]);
-
-  useEffect(() => {
-    if (visibleArr && visibleArr.every((obj) => obj.visible == false)) {
-      dispatch(cart(false));
-    } else {
-      dispatch(cart(true));
-    }
-  }, [visibleArr]);
+  const cart = useSelector((state) => state?.cart);
 
   return (
     <Container>
@@ -149,12 +126,12 @@ const SingleCategoryPage = ({ textOnLeft = false }) => {
                   <div style={{ padding: "20px 60px" }}>
                     <p>{i.description}</p>
                   </div>
-                  <AddToCart setArray={setArray} id={i} data={i._id} />
+                  <AddToCart data={i} id={i._id} />
                 </Paper>
               </>
             );
           })}
-          {visible && (
+          {cart.cartTotalQuantity > 0 && (
             <div
               style={{
                 display: "flex",
