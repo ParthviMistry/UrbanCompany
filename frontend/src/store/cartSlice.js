@@ -38,18 +38,19 @@ const cartSlice = createSlice({
     },
     decreaseCart(state, action) {
       const itemIndex = state.cartItems.findIndex(
-        (item) => item.id === action.payload.id
+        (item) => item._id === action.payload._id
       );
+      console.log("itemidex....", itemIndex);
 
-      if (state.cartItems[itemIndex].cartQuantity > 1) {
+      if (state.cartItems[itemIndex]?.cartQuantity > 1) {
         state.cartItems[itemIndex].cartQuantity -= 1;
 
         toast.info("Decreased product quantity", {
           position: "bottom-left"
         });
-      } else if (state.cartItems[itemIndex].cartQuantity === 1) {
+      } else if (state.cartItems[itemIndex]?.cartQuantity === 1) {
         const nextCartItems = state.cartItems.filter(
-          (item) => item.id !== action.payload.id
+          (item) => item._id !== action.payload._id
         );
 
         state.cartItems = nextCartItems;

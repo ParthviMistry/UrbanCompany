@@ -149,7 +149,7 @@ const SingleCategoryPage = ({ textOnLeft = false }) => {
                   <div style={{ padding: "20px 60px" }}>
                     <p>{i.description}</p>
                   </div>
-                  <AddToCart setArray={setArray} id={i} />
+                  <AddToCart setArray={setArray} id={i} data={i._id} />
                 </Paper>
               </>
             );
