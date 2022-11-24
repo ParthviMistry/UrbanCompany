@@ -88,8 +88,6 @@ const deletecategory = async (req, res) => {
 
 const searchCategory = async (req, res) => {
   try {
-    console.log("title...", req.body);
-
     const data = await Category.find({
       title: { $regex: req.body.title, $options: "i" }
     });

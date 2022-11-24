@@ -82,10 +82,7 @@ const FullWidthWithImage = ({
   }, []);
 
   useEffect(() => {
-    filterData &&
-      filterData.map((item) =>
-        dispatch(getSubCategoriesByCategoryID(item?._id))
-      );
+    dispatch(getSubCategoriesByCategoryID(filterData?._id));
   }, [filterData]);
 
   let arr = [];

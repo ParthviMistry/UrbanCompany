@@ -76,6 +76,9 @@ const categorySlice = createSlice({
     },
     selectCategory: (state, action) => {
       state.selectedCatgory = action.payload;
+    },
+    clearSearch: (state, action) => {
+      state.search = "";
     }
   },
   extraReducers: {
@@ -123,5 +126,6 @@ const categorySlice = createSlice({
   }
 });
 
-export const { clearState, selectCategory } = categorySlice.actions;
+export const { clearState, selectCategory, clearSearch } =
+  categorySlice.actions;
 export default categorySlice.reducer;

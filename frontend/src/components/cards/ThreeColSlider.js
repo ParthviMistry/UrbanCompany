@@ -41,7 +41,7 @@ const ThreeColSlider = () => {
   }, [data]);
 
   useEffect(() => {
-    filterData && navigate(`/category/${filterData.map((i) => i._id)}`);
+    filterData && navigate(`/category/${filterData._id}`);
   }, [filterData]);
 
   return (

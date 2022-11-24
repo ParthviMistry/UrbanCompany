@@ -2,7 +2,11 @@ import React, { useEffect, useState } from "react";
 import TextField from "@mui/material/TextField";
 import { useSelector, useDispatch } from "react-redux";
 import Autocomplete, { createFilterOptions } from "@mui/material/Autocomplete";
-import { selectCategory, searchCategory } from "store/categorySlice";
+import {
+  selectCategory,
+  searchCategory,
+  clearSearch
+} from "store/categorySlice";
 
 const filter = createFilterOptions();
 
@@ -11,22 +15,24 @@ const CategorySearch = (props) => {
   const dispatch = useDispatch();
 
   const data = useSelector((state) => state?.category?.search);
-  console.log("search==>", data);
 
   const [value, setValue] = useState(null);
   const [option, setOption] = useState("");
   const [id, setId] = useState("");
 
-  console.log("option.....", option);
-
   const handleOnChange = (e, value) => {
-    if (e.target.value.length > 3)
+    if (e.target.value.length > 1) {
       dispatch(searchCategory({ title: e.target.value }));
+    } else if (e.target.value.length === 0) {
+      dispatch(clearSearch());
+    }
 
     setOption(
-      data.map((i) => {
-        return { label: i.title };
-      })
+      data
+        ? data.map((i) => {
+            return { label: i.title, data: i };
+          })
+        : ""
     );
 
     if (typeof value === "string") {
@@ -72,9 +78,9 @@ const CategorySearch = (props) => {
       clearOnBlur
       handleHomeEndKeys
       freeSolo
-      options={option ? option : []}
+      options={option && data ? option : []}
       renderOption={(props, option) =>
-        option && <li {...props}>{option.label}</li>
+        option && data && <li {...props}>{option.label}</li>
       }
       renderInput={(params) => (
         <TextField {...params} label="Search Category" />
