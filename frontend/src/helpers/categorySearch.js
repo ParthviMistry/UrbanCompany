@@ -66,12 +66,20 @@ const CategorySearch = () => {
       value={value}
       options={option && data ? option : []}
       renderInput={(params) => (
-        <TextField {...params} label="Search Category" />
+        <TextField
+          {...params}
+          label="Search Category"
+          InputProps={{
+            ...params.InputProps,
+            type: "search"
+          }}
+        />
       )}
       fullWidth
       selectOnFocus
       clearOnBlur
       handleHomeEndKeys
+      disableClearable
     />
   );
 };
