@@ -132,4 +132,5 @@ const categorySlice = createSlice({
 
 export const { clearState, selectCategory, clearSearch, cart } =
   categorySlice.actions;
+
 export default categorySlice.reducer;

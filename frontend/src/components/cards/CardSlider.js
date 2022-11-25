@@ -15,8 +15,6 @@ import CategoryModal from "components/modal/categoryModal";
 
 import { getSubCategoriesByCategoryID } from "store/categorySlice";
 
-import _ from "lodash";
-
 import "../../styles/index.css";
 
 const HeadingWithControl = tw.div`flex mt-5 flex-col items-center sm:items-stretch sm:flex-row justify-between`;

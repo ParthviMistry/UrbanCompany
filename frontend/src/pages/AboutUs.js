@@ -17,7 +17,7 @@ const AboutUs = () => {
   return (
     <AnimationRevealPage>
       <MainFeature1
-        subheading={<Subheading>About Treact</Subheading>}
+        subheading={<Subheading>About HomeService</Subheading>}
         heading="We are a modern design agency."
         buttonRounded={false}
         primaryButtonText="See Portfolio"
