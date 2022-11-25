@@ -40,7 +40,6 @@ const MainHeader = () => {
       <NavLink href="/categories">Category</NavLink>
       <NavLink href="/about">About</NavLink>
       <NavLink href="/contact">Contact</NavLink>
-      {/* <NavLink href="#">Blog</NavLink> */}
       {token ? (
         <NavLink
           type="button"
